@@ -14,5 +14,13 @@
   "bugs": {
     "url": "https://github.com/StarksJohn/react-native-tools/issues"
   },
-  "homepage": "https://github.com/StarksJohn/react-native-tools#readme"
+  "homepage": "https://github.com/StarksJohn/react-native-tools#readme",
+  "dependencies": {
+    "@react-native-community/eslint-config": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.31.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
 }

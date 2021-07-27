@@ -53,7 +53,7 @@ import {
   XTSize /*适配不同屏幕的字体,等比例缩放之*/,
   ResetStyle,
 } from "react-native-easy-app";
-import ahooks from "./tools/ahooks";
+import ahooks from './tools/ahooks';
 
 const react_native_tools = {
   baseTimer,
