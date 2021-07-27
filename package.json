@@ -1,0 +1,18 @@
+{
+  "name": "react-native-tools",
+  "version": "1.0.0",
+  "description": "Contains some modules commonly used in react native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StarksJohn/react-native-tools.git"
+  },
+  "author": "stark",
+  "bugs": {
+    "url": "https://github.com/StarksJohn/react-native-tools/issues"
+  },
+  "homepage": "https://github.com/StarksJohn/react-native-tools#readme"
+}
