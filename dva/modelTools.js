@@ -1,49 +1,49 @@
 /* eslint-disable consistent-return */
-import _ from 'lodash';
-import objTools from '../tools/objTools';
-import tool from '../tools/tool';
-import asyncStorage from '../tools/asyncStorage';
-import baseModel from './baseModel';
+import _ from 'lodash'
+import objTools from '../tools/objTools'
+import tool from '../tools/tool'
+import asyncStorage from '../tools/asyncStorage'
+import baseModel from './baseModel'
 
-function replaceArray(objValue, srcValue) {
+function replaceArray (objValue, srcValue) {
   if (Array.isArray(objValue)) {
-    return srcValue;
+    return srcValue
   }
 }
 
-function concatArray(objValue, srcValue) {
+function concatArray (objValue, srcValue) {
   if (Array.isArray(objValue)) {
-    return objValue.concat(srcValue);
+    return objValue.concat(srcValue)
   }
 }
 
-function mergeState(
+function mergeState (
   preState = {},
   newState = {},
   doMerge = false,
-  arrayMerge = 'append',
+  arrayMerge = 'append'
 ) {
-  const {viewHashString: preHash} = preState;
-  const {viewHashString: newHash} = newState;
+  const { viewHashString: preHash } = preState
+  const { viewHashString: newHash } = newState
 
   // 数据没有变化
   if (objTools.isNotEmpty(newHash) && preHash === newHash) {
-    return null;
+    return null
   }
 
   // 不进行merge操作
   if (!doMerge) {
-    return newState;
+    return newState
   }
 
   // merge 对象, 不指定array的merge方法，默认为concat data to legacy array
-  const processor = arrayMerge === 'replace' ? replaceArray : concatArray;
+  const processor = arrayMerge === 'replace' ? replaceArray : concatArray
   // 小程序下没问题，但是H5中，redux做的浅比较，ajax会有问题
   // const result = mergeWith(preState, newState, processor)
-  const result = _.mergeWith({}, preState, newState, processor);
-  console.log('merged result', result);
+  const result = _.mergeWith({}, preState, newState, processor)
+  console.log('merged result', result)
 
-  return result;
+  return result
 }
 
 /**
@@ -51,19 +51,19 @@ function mergeState(
  * @param key
  */
 const cacheAnAttributeOfInitState = async ({
-                                             key,
-                                             value,
-                                             attributesToBeCached,
-                                           }) => {
-  let index = _.indexOf(attributesToBeCached, key);
+  key,
+  value,
+  attributesToBeCached
+}) => {
+  const index = _.indexOf(attributesToBeCached, key)
   if (index !== -1) {
-    console.log('modelTools.js 开始缓存 initState.', key, ' 的值=', value);
-    const [err, data] = await tool.to(asyncStorage.setItem(key, value));
+    console.log('modelTools.js 开始缓存 initState.', key, ' 的值=', value)
+    const [err, data] = await tool.to(asyncStorage.setItem(key, value))
     if (data) {
-      console.log('modelTools.js 缓存 ', key, '成功');
+      console.log('modelTools.js 缓存 ', key, '成功')
     }
   }
-};
+}
 
 /**
  * 创建默认model
@@ -72,15 +72,15 @@ const cacheAnAttributeOfInitState = async ({
  * @param namespace
  * @returns {{effects: {}, namespace: *, reducers: {clear(): {}, save(*=, {payload: *}): *, saveSomeThing(*, {payload: *}): *}, state: {}}}
  */
-const createDefault = ({nameSpace, attributesToBeCached = null}) => ({
+const createDefault = ({ nameSpace, attributesToBeCached = null }) => ({
   nameSpace,
   state: {},
   effects: {
-    //modelTools.js 里的 每个 effects 都会注入到每个 Model 里
-    //通用的 具体控件发起的 effect,把 payload 发给对应的 reducer, 并且如果 action 在 attributesToBeCached 里注册过,就缓存 action 对应的 数据
-    *[baseModel.baseEffects.saveSomeThing](
-      {action, payload, callback},
-      {put, call, select},
+    // modelTools.js 里的 每个 effects 都会注入到每个 Model 里
+    // 通用的 具体控件发起的 effect,把 payload 发给对应的 reducer, 并且如果 action 在 attributesToBeCached 里注册过,就缓存 action 对应的 数据
+    * [baseModel.baseEffects.saveSomeThing] (
+      { action, payload, callback },
+      { put, call, select }
     ) {
       console.log(
         'modelTools.js effects saveSomeThing \n nameSpace=',
@@ -88,37 +88,39 @@ const createDefault = ({nameSpace, attributesToBeCached = null}) => ({
         '\n payload=',
         payload,
         '\n action=',
-        action,
-      );
+        action, ' \n callback=', callback
+      )
       // const state = yield select((state) => state) //这里就获取到了当前state
       // console.log('testModel.js effects  全局state=', state)
 
-      //更新 当前 model 的 state
-      yield put({type: baseModel.baseAction.saveSomeThing, payload});
+      if (payload instanceof Object) {
+        // 更新 当前 model 的 state
+        yield put({ type: baseModel.baseAction.saveSomeThing, payload })
 
-      // 缓存 某个Model的 initState里的某个字段的值
-      yield cacheAnAttributeOfInitState({
-        key: action,
-        value: payload[action],
-        attributesToBeCached,
-      });
+        // 缓存 某个Model的 initState里的某个字段的值
+        yield cacheAnAttributeOfInitState({
+          key: action,
+          value: payload[action],
+          attributesToBeCached
+        })
 
-      callback && callback();
-    },
+        callback && callback()
+      }
+    }
   },
 
-  //reducers 里的每个方法都会注入到每个Model里
+  // reducers 里的每个方法都会注入到每个Model里
   reducers: {
-    clear() {
-      return {};
+    clear () {
+      return {}
     },
-    [baseModel.baseAction.saveSomeThing](state, {payload}) {
+    [baseModel.baseAction.saveSomeThing] (state, { payload }) {
       // console.log("modelTools.js reducers saveSomeThing state=", state);
       // console.log("modelTools.js reducers saveSomeThing payload=", payload);
       const newState = {
         ...state,
-        ...payload,
-      };
+        ...payload
+      }
       console.log(
         'modelTools.js reducers saveSomeThing \n nameSpace=',
         nameSpace,
@@ -127,17 +129,11 @@ const createDefault = ({nameSpace, attributesToBeCached = null}) => ({
         '\n payload=',
         payload,
         '\n newState=',
-        newState,
-      );
+        newState
+      )
 
-      return newState;
-    },
-    // save(state, {payload}) {
-    //   const {statInPage, arrayMerge, refresh, ...resp} = payload;
-    //   const doMerge = refresh ? false : statInPage;
-    //   const result = mergeState(state, resp, doMerge, arrayMerge);
-    //   return result || state;
-    // },
+      return newState
+    }
   },
   /**
    * https://segmentfault.com/a/1190000039180929
@@ -149,24 +145,24 @@ const createDefault = ({nameSpace, attributesToBeCached = null}) => ({
    * history: react-router中的 history
    */
   subscriptions: {
-    //初始化缓存方法,每个model都会注入一次这个方法
+    // 初始化缓存方法,每个model都会注入一次这个方法
     initCache: (params) => {
-      const {dispatch, history} = params;
+      const { dispatch, history } = params
       console.log(
         'modelTools.js subscriptions initCache attributesToBeCached=',
-        attributesToBeCached,
-      );
+        attributesToBeCached
+      )
       return baseModel.baseSubscriptions.initCache({
         nameSpace,
         dispatch,
         history,
-        attributesToBeCached,
-      });
-    },
-  },
-});
+        attributesToBeCached
+      })
+    }
+  }
+})
 
 const ModelTools = {
-  createDefault,
-};
-export default ModelTools;
+  createDefault
+}
+export default ModelTools

@@ -1,53 +1,53 @@
-import {create} from 'dva-core';
+import { create } from 'dva-core'
 
-let app;
-let store;
-let dispatch;
-let registered;
+let app
+let store
+let dispatch
+let registered
 
-function createApp(opt) {
+function createApp (opt) {
   // redux 的日志
   // if (opt.enableLog) {
   //   opt.onAction = [createLogger()]
   // }
-  console.log('dva.js createApp opt=', opt);
+  console.log('dva.js createApp opt=', opt)
 
-  app = create(opt);
+  app = create(opt)
 
   if (!registered) {
-    opt.models.forEach((model) => app.model(model));
+    opt.models.forEach((model) => app.model(model))
   }
-  registered = true;
+  registered = true
 
-  //https://dvajs.com/api/#app-dva-opts
+  // https://dvajs.com/api/#app-dva-opts
   app.use({
-    onError(err) {
-      console.log('dva.js onError=', err);
-    },
-  });
+    onError (err) {
+      console.log('dva.js onError=', err)
+    }
+  })
 
-  app.start();
+  app.start()
 
-  store = app._store;
-  app.getStore = () => store;
+  store = app._store
+  app.getStore = () => store
 
-  dispatch = store.dispatch;
-  app.dispatch = dispatch;
-  console.log('dva.js app=', app);
+  dispatch = store.dispatch
+  app.dispatch = dispatch
+  console.log('dva.js app=', app)
 
-  return app;
+  return app
 }
 
 export default {
   createApp,
-  //任何地方都可以访问到dispatch
-  getDispatch(p) {
-    return app.dispatch(p);
+  // 任何地方都可以访问到dispatch
+  getDispatch (p) {
+    return app.dispatch(p)
   },
-  //任何地方都可访问到的所有model的 集合
+  // 任何地方都可访问到的所有model的 集合
   getState: () => {
-    let state = app.getStore().getState();
-    console.log('dva.js getState=', state);
-    return state;
-  },
-};
+    const state = app.getStore().getState()
+    console.log('dva.js getState=', state)
+    return state
+  }
+}

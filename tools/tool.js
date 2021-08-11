@@ -1,6 +1,7 @@
-import {Platform} from 'react-native';
-import asyncStorage from './asyncStorage';
-import _ from 'lodash';
+import { Platform } from 'react-native'
+import asyncStorage from './asyncStorage'
+import _ from 'lodash'
+import dva from '../dva/dva.js'
 
 export default {
   /**
@@ -12,11 +13,11 @@ export default {
   to: (promise) => {
     return promise
       .then((res) => {
-        return [null, res];
+        return [null, res]
       })
       .catch((err) => {
-        return [err];
-      });
+        return [err]
+      })
   },
 
   /**
@@ -26,18 +27,18 @@ export default {
    */
   uri: (imgUrl = '') => {
     if (Platform.OS === 'ios' && imgUrl.startsWith('http:')) {
-      imgUrl = imgUrl.replace(/http/, 'https');
+      imgUrl = imgUrl.replace(/http/, 'https')
     }
-    return imgUrl;
+    return imgUrl
   },
 
-  //换算显示的 xxx 万
-  tenThousandConversion: (n, unitStr /*超过10000后最后显示的单位*/) => {
+  // 换算显示的 xxx 万
+  tenThousandConversion: (n, unitStr /* 超过10000后最后显示的单位 */) => {
     if (n >= 10000) {
-      n = Math.round((n / 10000) * 100) / 100;
-      n = n + unitStr;
+      n = Math.round((n / 10000) * 100) / 100
+      n = n + unitStr
     }
-    return n;
+    return n
   },
 
   /**
@@ -50,53 +51,62 @@ export default {
   shouldUpdate: (old, now, keys) => {
     const isEmpty = (object) => {
       if (object === null) {
-        return true;
+        return true
       } else {
         switch (typeof object) {
           case 'undefined': {
-            return true;
+            return true
           }
           case 'string': {
-            return object === '';
+            return object === ''
           }
           case 'object': {
             for (const key in object) {
-              return false;
+              return false
             }
-            return true;
+            return true
           }
           default: {
-            return false;
+            return false
           }
         }
       }
-    };
+    }
     if (!isEmpty(keys)) {
       for (const i in keys) {
-        const key = keys[i];
-        const oldValue = old[key];
-        const nowValue = now[key];
+        const key = keys[i]
+        const oldValue = old[key]
+        const nowValue = now[key]
         if (typeof oldValue !== 'function' && typeof nowValue !== 'function') {
           try {
             if (JSON.stringify(oldValue) !== JSON.stringify(nowValue)) {
-              return true;
+              return true
             }
           } catch (e) {}
         }
       }
     }
-    return false;
+    return false
   },
 
   /**
    * 缓存 initState 的某个属性,如果这个属性再 attributesToBeCached 里注册了的话
    * @param key
    */
-  cacheAnAttributeOfInitState: ({key, value, attributesToBeCached}) => {
-    let index = _.indexOf(attributesToBeCached, key);
+  cacheAnAttributeOfInitState: ({ key, value, attributesToBeCached }) => {
+    const index = _.indexOf(attributesToBeCached, key)
     if (index !== -1) {
-      console.log('tool.js 开始缓存 initState.', key, ' 的值=', value);
-      asyncStorage.setItem(key, value).then();
+      console.log('tool.js 开始缓存 initState.', key, ' 的值=', value)
+      asyncStorage.setItem(key, value).then()
     }
   },
-};
+
+  /**
+   * Dispatch anywhere outside the Component
+   * 在 Component 外 的任何地方 发 dispatch
+   * @param p
+   */
+  dispatchAnyWhere: p => {
+    return dva.getDispatch(p)
+  }
+}
