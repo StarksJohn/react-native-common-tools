@@ -1,7 +1,7 @@
-import _ from 'lodash';
-import objTools from '../tools/objTools';
-import tool from '../tools/tool';
-import asyncStorage from '../tools/asyncStorage';
+import _ from 'lodash'
+import objTools from '../tools/objTools'
+import tool from '../tools/tool'
+import asyncStorage from '../tools/asyncStorage'
 
 /**
  *  * https://dvajs.com/api/#model
@@ -19,41 +19,41 @@ export default {
    */
   attributesToBeCached: [],
   baseEffects: {
-    saveSomeThing: 'baseEffects/saveSomeThing', //具体控件发的 effect,有 缓存 initState 的某个属性 作用
-    awaitSaveSomeThing: 'baseEffects/awaitSaveSomeThing',
+    saveSomeThing: 'baseEffects/saveSomeThing', // 具体控件发的 effect,有 缓存 initState 的某个属性 作用
+    awaitSaveSomeThing: 'baseEffects/awaitSaveSomeThing'
   },
   baseAction: {
-    saveSomeThing: 'baseAction/saveSomeThing', //触发 modelTools.js里的 reducers 的 saveSomeThing 的 action
-    awaitSaveSomeThing: 'baseAction/awaitSaveSomeThing',
+    saveSomeThing: 'baseAction/saveSomeThing', // 触发 modelTools.js里的 reducers 的 saveSomeThing 的 action
+    awaitSaveSomeThing: 'baseAction/awaitSaveSomeThing'
   },
   baseSubscriptions: {
-    //初始化缓存
-    initCache: ({namespace, dispatch, history, attributesToBeCached}) => {
+    // 初始化缓存
+    initCache: ({ namespace, dispatch, history, attributesToBeCached }) => {
       console.log(
         'baseModel.js subscriptions initCache namespace=',
         namespace,
         ' attributesToBeCached=',
-        attributesToBeCached,
-      );
+        attributesToBeCached
+      )
       _.forEach(attributesToBeCached, async (key) => {
-        console.log('baseModel.js initCache forEach key=', key);
-        const [e_value, value] = await tool.to(asyncStorage.getItem(key));
+        console.log('baseModel.js initCache forEach key=', key)
+        const [e_value, value] = await tool.to(asyncStorage.getItem(key))
         console.log(
           'baseModel.js initCache forEach getItem key=',
           key,
           ' value=',
-          value,
-        );
+          value
+        )
         if (objTools.isNotEmpty(value)) {
-          const payload = {[`${key}`]: value};
-          console.log('baseModel.js dispatch payload=', payload);
+          const payload = { [`${key}`]: value }
+          console.log('baseModel.js dispatch payload=', payload)
 
           dispatch({
             type: 'baseAction/saveSomeThing',
-            payload,
-          });
+            payload
+          })
         }
-      });
-    },
-  },
-};
+      })
+    }
+  }
+}

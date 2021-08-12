@@ -108,5 +108,8 @@ export default {
    */
   dispatchAnyWhere: p => {
     return dva.getDispatch(p)
+  },
+  getStore: () => {
+    return dva.getStore()
   }
 }

@@ -69,12 +69,25 @@ const cacheAnAttributeOfInitState = async ({
  * 创建默认model
  * https://dvajs.com/api/#model
  * effects: 以 key/value 格式定义 effect。用于处理异步操作和业务逻辑，不直接修改 state。由 action 触发，可以触发 action，可以和服务器交互，可以获取全局 state 的数据等等。
- * @param namespace
+ * @param namespace : 不能改为 nameSpace,因 Model 里定义的 就是 namespace
  * @returns {{effects: {}, namespace: *, reducers: {clear(): {}, save(*=, {payload: *}): *, saveSomeThing(*, {payload: *}): *}, state: {}}}
  */
-const createDefault = ({ nameSpace, attributesToBeCached = null }) => ({
-  nameSpace,
+const createDefault = ({ namespace, attributesToBeCached = null }) => ({
+  namespace,
   state: {},
+  saveSomeThing: ({ effect, action, callback }) => {
+    tool.dispatchAnyWhere({
+      type: effect,
+      action: action,
+      payload: {
+        action
+      },
+      callback: (result) => {
+        console.log('modelTools.js saveSomeThing callback=', result)
+        callback && callback(result)
+      }
+    })
+  },
   effects: {
     // modelTools.js 里的 每个 effects 都会注入到每个 Model 里
     // 通用的 具体控件发起的 effect,把 payload 发给对应的 reducer, 并且如果 action 在 attributesToBeCached 里注册过,就缓存 action 对应的 数据
@@ -83,8 +96,8 @@ const createDefault = ({ nameSpace, attributesToBeCached = null }) => ({
       { put, call, select }
     ) {
       console.log(
-        'modelTools.js effects saveSomeThing \n nameSpace=',
-        nameSpace,
+        'modelTools.js effects saveSomeThing \n namespace=',
+        namespace,
         '\n payload=',
         payload,
         '\n action=',
@@ -122,8 +135,8 @@ const createDefault = ({ nameSpace, attributesToBeCached = null }) => ({
         ...payload
       }
       console.log(
-        'modelTools.js reducers saveSomeThing \n nameSpace=',
-        nameSpace,
+        'modelTools.js reducers saveSomeThing \n namespace=',
+        namespace,
         ' \n state=',
         state,
         '\n payload=',
@@ -153,7 +166,7 @@ const createDefault = ({ nameSpace, attributesToBeCached = null }) => ({
         attributesToBeCached
       )
       return baseModel.baseSubscriptions.initCache({
-        nameSpace,
+        namespace,
         dispatch,
         history,
         attributesToBeCached

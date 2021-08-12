@@ -10,12 +10,13 @@ function createApp (opt) {
   // if (opt.enableLog) {
   //   opt.onAction = [createLogger()]
   // }
-  console.log('dva.js createApp opt=', opt)
 
   app = create(opt)
 
   if (!registered) {
-    opt.models.forEach((model) => app.model(model))
+    opt.models.forEach((model) => {
+      return app.model(model)
+    })
   }
   registered = true
 
@@ -49,5 +50,8 @@ export default {
     const state = app.getStore().getState()
     console.log('dva.js getState=', state)
     return state
+  },
+  getStore: () => {
+    return app.getStore()
   }
 }
