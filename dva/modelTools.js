@@ -75,19 +75,6 @@ const cacheAnAttributeOfInitState = async ({
 const createDefault = ({ namespace, attributesToBeCached = null }) => ({
   namespace,
   state: {},
-  saveSomeThing: ({ effect, action, callback }) => {
-    tool.dispatchAnyWhere({
-      type: effect,
-      action: action,
-      payload: {
-        action
-      },
-      callback: (result) => {
-        console.log('modelTools.js saveSomeThing callback=', result)
-        callback && callback(result)
-      }
-    })
-  },
   effects: {
     // modelTools.js 里的 每个 effects 都会注入到每个 Model 里
     // 通用的 具体控件发起的 effect,把 payload 发给对应的 reducer, 并且如果 action 在 attributesToBeCached 里注册过,就缓存 action 对应的 数据
