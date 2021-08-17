@@ -1540,6 +1540,11 @@ react-is@^16.8.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-easy-app@^1.7.27:
+  version "1.7.27"
+  resolved "https://registry.npmjs.org/react-native-easy-app/-/react-native-easy-app-1.7.27.tgz#6cd994da41708767b4aa17c9a35b49e0b8b93410"
+  integrity sha512-gxQTVoc0TOwPdHaNNY+rne6YLlGbN3VjFs7990AjHSKtT84fRtEfDJKezWhBDJeTEqEVjybQpm4VCtCYOTcVGw==
+
 read-pkg-up@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/read-pkg-up/-/read-pkg-up-3.0.0.tgz#3ed496685dba0f8fe118d0691dc51f4a1ff96f07"
