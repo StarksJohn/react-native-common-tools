@@ -42,7 +42,6 @@ import dva from './dva/dva'
 import baseModel from './dva/baseModel'
 import models from './dva/models'
 import modelTools from './dva/modelTools'
-import HttpConfig from './api/HttpConfig' // 创建默认的 HTTP配置实例
 import {
   XHttp,
   XImage,
@@ -100,7 +99,6 @@ const react_native_tools = {
   baseModel,
   models,
   modelTools,
-  HttpConfig,
   XHttp,
   XView,
   XImage,
