@@ -55,6 +55,7 @@ import {
 } from 'react-native-easy-app'
 import ahooks from './tools/ahooks'
 import routes from './routes/index.js'
+import MyStyleSheet from './styles/MyStyleSheet.js'
 
 const react_native_tools = {
   baseTimer,
@@ -109,7 +110,8 @@ const react_native_tools = {
   XTSize,
   ResetStyle,
   ahooks,
-  routes
+  routes,
+  MyStyleSheet
 }
 
 module.exports = react_native_tools
