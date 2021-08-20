@@ -8,7 +8,18 @@ import { LargeList } from 'react-native-largelist'
 import { ChineseWithLastDateHeader, ChineseWithLastDateFooter } from 'react-native-spring-scrollview/Customize'
 
 /**
- * PureComponent
+ * eg:
+ * <List ref={refList} onRefresh={({ page }) => {
+          return new Promise((resolve, reject) => {
+          })
+        }} onLoading={({ page }) => {
+          return new Promise((resolve, reject) => {
+          })
+        }} heightForIndexPath={({ section, row }) => {
+        }} renderIndexPath={({ section, row, mediaWrapperParam, rowData }) => {
+          return (
+          )
+        }}></List>
  * @param props
  * @param parentRef
  * @returns {*}
