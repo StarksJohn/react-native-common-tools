@@ -7,7 +7,7 @@ import {
  * https://developer.aliyun.com/article/764145
  */
 XWidget.initResource('') // 网络图片的 Baseurl ,设置了之后，用图片的时候就只需要设置后缀就行了
-  .initReferenceScreen(375, 677) // 为了让 使用 MyStyleSheet作为样式的控件 适配不同屏幕,达到自动缩放效果
+  .initReferenceScreen(375, 677) // iphone 6 屏幕,为了让 使用 MyStyleSheet作为样式的控件 适配不同屏幕,达到自动缩放效果
 
 /**
  * eg:

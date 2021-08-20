@@ -55,6 +55,7 @@ import {
 import ahooks from './tools/ahooks'
 import routes from './routes/index.js'
 import MyStyleSheet from './styles/MyStyleSheet.js'
+import { List, mockData } from './components/List/index.js'
 
 const react_native_tools = {
   baseTimer,
@@ -109,7 +110,9 @@ const react_native_tools = {
   ResetStyle,
   ahooks,
   routes,
-  MyStyleSheet
+  MyStyleSheet,
+  List,
+  mockData
 }
 
 module.exports = react_native_tools
