@@ -32,7 +32,7 @@ import dateTools from './tools/dateTools'
 import * as Math from './tools/Math'
 // import md5 from './tools/md5'
 import md5 from './tools/blueimp_md5'
-import ScrollView from './components/ScrollView'
+// import ScrollView from './components/ScrollView'
 import useAppStateListener from './components/CustomHooks/useAppStateListener'
 import useAndroidBackHandler from './components/CustomHooks/useAndroidBackHandler'
 import useSubscribeKeyboard from './components/CustomHooks/useSubscribeKeyboard'
@@ -56,6 +56,7 @@ import ahooks from './tools/ahooks'
 import routes from './routes/index.js'
 import MyStyleSheet from './styles/MyStyleSheet.js'
 import { List, mockData } from './components/List/index.js'
+import ScrollView from './components/ScrollView/ScrollView.js'
 
 const react_native_tools = {
   baseTimer,
