@@ -145,7 +145,9 @@ const _style = {
   safeAreaInsets: null, // 不同设备安全区域相对物理屏幕的内边距,由具体项目的 react-native-safe-area-context 库的 useSafeAreaInsets 获取
   isIphoneX: isIphoneX(),
   ifIphoneX,
+  // the height of the status bar: 44 for safe iPhoneX, 30 for unsafe iPhoneX, 20 for other iOS devices and StatusBar.currentHeight for Android.
   getStatusBarHeight,
+  // the height of the bottom to fit the safe area: 34 for iPhone X and 0 for other devices.
   getBottomSpace
 }
 
