@@ -4499,6 +4499,11 @@ react-native-easy-app@^1.7.27:
   resolved "https://registry.npmjs.org/react-native-easy-app/-/react-native-easy-app-1.7.27.tgz#6cd994da41708767b4aa17c9a35b49e0b8b93410"
   integrity sha512-gxQTVoc0TOwPdHaNNY+rne6YLlGbN3VjFs7990AjHSKtT84fRtEfDJKezWhBDJeTEqEVjybQpm4VCtCYOTcVGw==
 
+react-native-iphone-x-helper@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
+  integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
+
 react-native@0.63.4:
   version "0.63.4"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.63.4.tgz#2210fdd404c94a5fa6b423c6de86f8e48810ec36"

@@ -1,4 +1,5 @@
 import { Dimensions, PixelRatio, Platform, StatusBar } from 'react-native'
+import { ifIphoneX as _ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
 
 // https://juejin.im/post/5c4949bc6fb9a049bd42a6eb
 // iPhone X、iPhone XS
@@ -70,17 +71,17 @@ const scaleSize = (size) => {
   // MathUtils.subtract(size,defaultPixel,4)
 }
 
-const _isIphoneX = (() => {
-  const is =
-    (isiOS() &&
-      !Platform.isPad &&
-      !Platform.isTVOS &&
-      ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) || // 竖屏
-        (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))) || // 横屏
-    (D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH) ||
-    (D_HEIGHT === XSMAX_WIDTH && D_WIDTH === XSMAX_HEIGHT)
-  return is
-})()
+// const _isIphoneX = (() => {
+//   const is =
+//     (isiOS() &&
+//       !Platform.isPad &&
+//       !Platform.isTVOS &&
+//       ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) || // 竖屏
+//         (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))) || // 横屏
+//     (D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH) ||
+//     (D_HEIGHT === XSMAX_WIDTH && D_WIDTH === XSMAX_HEIGHT)
+//   return is
+// })()
 
 // Get the height of the status bar
 export function getStatusBarHeight () {
@@ -94,9 +95,9 @@ export function getStatusBarHeight () {
  *
  * @returns {boolean}
  */
-export function isIphoneX () {
-  return _isIphoneX
-}
+// export function isIphoneX () {
+//   return _isIphoneX
+// }
 
 /**
  *
@@ -106,14 +107,15 @@ export function isIphoneX () {
  * @returns {*}
  */
 export function ifIphoneX (iphoneXStyle, iosStyle = {}, androidStyle) {
-  if (isIphoneX()) {
-    return iphoneXStyle
-  } else if (Platform.OS === 'ios') {
-    return iosStyle
-  } else {
-    if (androidStyle) {
-      return androidStyle
-    }
-    return iosStyle
-  }
+  return Platform.OS === 'ios' ? _ifIphoneX(iphoneXStyle, iosStyle) : androidStyle
+  // if (isIphoneX()) {
+  //   return iphoneXStyle
+  // } else if (Platform.OS === 'ios') {
+  //   return iosStyle
+  // } else {
+  //   if (androidStyle) {
+  //     return androidStyle
+  //   }
+  //   return iosStyle
+  // }
 }

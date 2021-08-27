@@ -2,6 +2,7 @@
  */
 import React, { StyleSheet, Dimensions, PixelRatio, Platform, StatusBar, Image } from 'react-native'
 import { ifIphoneX, dp } from '../tools/screenTools'
+import { isIphoneX, getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper'
 
 const appThemeColor = '#9E1F63'
 const pageBackgroundColor = '#F9F9F9'
@@ -19,15 +20,15 @@ const _style = {
   pageCellW,
   navBarH,
   white,
-  //没有 NavBar 控件时 页面顶部的 paddingTop
+  // 没有 NavBar 控件时 页面顶部的 paddingTop
   // fullScreenPaddingTop: ifIphoneX({ paddingTop: dp(statusBarH) }, { paddingTop: dp(statusBarH) }, { paddingTop: dp(statusBarH) }),
   statusBarH: Platform.select({
     ios: ifIphoneX(44, 20),
     android: StatusBar.currentHeight
   }),
-  ipxHeader: 40,//ipx顶部偏移量
-  //ipx底部偏移量，以后被 safeAreaInsets.bottom  代替
-  ipxBottomSpace:ifIphoneX(34, 0),
+  ipxHeader: 40, // ipx顶部偏移量
+  // ipx底部偏移量，以后被 safeAreaInsets.bottom  代替
+  ipxBottomSpace: ifIphoneX(34, 0),
   pageBackgroundColor,
   safeAreaView: {
     flex: 1, backgroundColor: appThemeColor
@@ -42,7 +43,9 @@ const _style = {
     return '#' +
       (function (color) {
         return (color += '0123456789abcdef'[Math.floor(Math.random() * 16)]) &&
-        (color.length == 6) ? color : arguments.callee(color)// 如果 本文件 'use strict';  此处的 callee 就报错
+        (color.length == 6)
+          ? color
+          : arguments.callee(color)// 如果 本文件 'use strict';  此处的 callee 就报错
       })('')
   },
   appThemeColor,
@@ -60,7 +63,7 @@ const _style = {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end'
-    },
+    }
     // headerBackImage: CommonComp.headerBackImage
   },
   absoluteFull: {
@@ -73,7 +76,7 @@ const _style = {
   blueText: '#0275D8',
   grayText: '#666666',
   grayBorder: '#9E9E9E',
-  //二级页面的 statusBar的 styles,直接隐藏 node_modules/react-native-navbar/index.js 里的 statusBar
+  // 二级页面的 statusBar的 styles,直接隐藏 node_modules/react-native-navbar/index.js 里的 statusBar
   // twoLevelPageStatusBar: {
   //   tintColor: 'red', animated: true, height: statusBarH,
   //   styles: 'dark-content', hidden: true, translucent: true
@@ -139,7 +142,11 @@ const _style = {
     ip11 : {left: 0, top: 48, right: 0, bottom: 34}
     ip8: {left: 0, top: 20, right: 0, bottom: 0}
    */
-  safeAreaInsets:null,//不同设备安全区域相对物理屏幕的内边距,由具体项目的 react-native-safe-area-context 库的 useSafeAreaInsets 获取
+  safeAreaInsets: null, // 不同设备安全区域相对物理屏幕的内边距,由具体项目的 react-native-safe-area-context 库的 useSafeAreaInsets 获取
+  isIphoneX: isIphoneX(),
+  ifIphoneX,
+  getStatusBarHeight,
+  getBottomSpace
 }
 
 export default _style
