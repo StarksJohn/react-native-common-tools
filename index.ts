@@ -18,7 +18,6 @@ import constant from './constant/constant'
 import SectionList from './components/SectionList'
 import homeSpringBoxQueue from './tools/homeSpringBoxQueue'
 import Toast from './components/Toast' //
-import * as teaset from 'teaset' //
 import SearchInput from './components/SearchInput'
 import VerificationCodeBt from './components/VerificationCodeBt'
 import TextBt from './components/TextBt'
@@ -58,7 +57,7 @@ import MyStyleSheet from './styles/MyStyleSheet.js'
 import { List, mockData } from './components/List/index.js'
 import ScrollView from './components/ScrollView/ScrollView.js'
 
-const react_native_tools = {
+const reactNativeTools = {
   baseTimer,
   constant,
   ScrollView,
@@ -87,7 +86,6 @@ const react_native_tools = {
   homeSpringBoxQueue,
   BasePureComponent,
   HttpManager,
-  teaset,
   VerificationCodeBt,
   netwrokCode,
   FlatList,
@@ -116,4 +114,4 @@ const react_native_tools = {
   mockData
 }
 
-module.exports = react_native_tools
+module.exports = reactNativeTools
