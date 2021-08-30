@@ -58,7 +58,8 @@ import { List, mockData } from './components/List/index.js'
 import ScrollView from './components/ScrollView/ScrollView.js'
 import * as request from './api/request'
 
-const reactNativeTools = {
+// const reactNativeTools =
+export {
   baseTimer,
   constant,
   ScrollView,
@@ -116,4 +117,4 @@ const reactNativeTools = {
   request
 }
 
-module.exports = reactNativeTools
+// module.exports = reactNativeTools
