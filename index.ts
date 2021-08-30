@@ -56,6 +56,7 @@ import routes from './routes/index.js'
 import MyStyleSheet from './styles/MyStyleSheet.js'
 import { List, mockData } from './components/List/index.js'
 import ScrollView from './components/ScrollView/ScrollView.js'
+import * as request from './api/request'
 
 const reactNativeTools = {
   baseTimer,
@@ -111,7 +112,8 @@ const reactNativeTools = {
   routes,
   MyStyleSheet,
   List,
-  mockData
+  mockData,
+  request
 }
 
 module.exports = reactNativeTools
