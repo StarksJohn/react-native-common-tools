@@ -189,9 +189,11 @@ const get = (url: string, params = {}, headers: any) => {
   })
 }
 
-const post = (url:string, params = {}) => {
+const post = (url:string, params = {}, headers: any) => {
   console.log('request.ts post url=', url)
   console.log('request.ts post params=', params)
+  console.log('request.ts post headers=', headers)
+
   return api
     .post(url, params,
       {
