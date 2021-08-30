@@ -1,6 +1,10 @@
 import { XHttpConfig } from 'react-native-easy-app'
 import NetInfo from '@react-native-community/netinfo'
 
+/**
+ * Network request base on react-native-easy-app
+ * @constructor
+ */
 const HttpConfig = function () {
   console.log('HttpConfig construct ')
   this.init()

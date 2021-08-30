@@ -1,25 +1,25 @@
 /**
- * Network request
+ * Network request base on fetch
  */
-import { Platform } from 'react-native';
-import * as netwrokCode from './netwrokCode';
-import tool from '../tools/tool';
-import * as stringTools from '../tools/stringTools';
+import { Platform } from 'react-native'
+import * as netwrokCode from './netwrokCode'
+import tool from '../tools/tool'
+import * as stringTools from '../tools/stringTools'
 
-export const CONTENT_TYPE_JSON = 'application/json';
-export const CONTENT_TYPE_FORM = 'application/x-www-form-urlencoded';
-export const multipart_form_data = 'multipart/form-data';
+export const CONTENT_TYPE_JSON = 'application/json'
+export const CONTENT_TYPE_FORM = 'application/x-www-form-urlencoded'
+export const multipart_form_data = 'multipart/form-data'
 
-const isIos = Platform.OS === 'ios';
+const isIos = Platform.OS === 'ios'
 export const optionParams = {
   timeoutMs: 10000, // Timeout MS
   token: null,
-  authorizationCode: null, // token
-};
+  authorizationCode: null // token
+}
 
 export const sslPinning = {
-  certs: ['cxa'], // your certificates name (without extension), for example cert1.cer, cert2.cer
-};
+  certs: ['cxa'] // your certificates name (without extension), for example cert1.cer, cert2.cer
+}
 
 export const commonParams = () => {
   // const auth = store.getState().Auth || {}
@@ -42,19 +42,19 @@ export const commonParams = () => {
     'Content-Type': CONTENT_TYPE_JSON,
     Accept: 'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': '*',
-    e_platform: 'mobile',
-  };
-};
+    e_platform: 'mobile'
+  }
+}
 
 const HttpManager = function () {
-  console.log('HttpManager construct ');
-  this.init();
-};
+  console.log('HttpManager construct ')
+  this.init()
+}
 
 HttpManager.prototype.init = async function () {
-  console.log('HttpManager init ');
+  console.log('HttpManager init ')
 
-  this.optionParams = optionParams;
+  this.optionParams = optionParams
 
   /**
    * Format JSON request parameters
@@ -72,21 +72,21 @@ HttpManager.prototype.init = async function () {
       //   ...(headers || {})
       // }),
       headers,
-      body: JSON.stringify(params),
-    };
-  };
+      body: JSON.stringify(params)
+    }
+  }
 
   /**
    * Format form request parameters
    */
   this.formParams = (method, params, headers) => {
-    const str = [];
+    const str = []
     for (const p in params) {
-      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(params[p]));
+      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(params[p]))
     }
-    let body = null;
+    let body = null
     if (str.length > 0) {
-      body = str.join('&');
+      body = str.join('&')
     }
     return {
       method: method,
@@ -99,9 +99,9 @@ HttpManager.prototype.init = async function () {
       // }
       // ),
       headers,
-      body,
-    };
-  };
+      body
+    }
+  }
 
   /**
    * Overtime management
@@ -112,25 +112,25 @@ HttpManager.prototype.init = async function () {
       const timeoutId = setTimeout(() => {
         resolve({
           status: netwrokCode.NETWORK_TIMEOUT,
-          message: 'Network Timeout',
-        });
-      }, ms);
+          message: 'Network Timeout'
+        })
+      }, ms)
       promise.then(
         (res) => {
-          clearTimeout(timeoutId);
+          clearTimeout(timeoutId)
           if (text) {
-            resolve(res.text());
+            resolve(res.text())
           } else {
-            resolve(res);
+            resolve(res)
           }
         },
         (err) => {
-          clearTimeout(timeoutId);
-          resolve(err);
+          clearTimeout(timeoutId)
+          resolve(err)
         }
-      );
-    });
-  };
+      )
+    })
+  }
 
   /**
    * Initiate network request
@@ -150,31 +150,31 @@ HttpManager.prototype.init = async function () {
     json = true,
     header = {},
     text = false,
-    timeoutMs = this.optionParams.timeoutMs,
+    timeoutMs = this.optionParams.timeoutMs
   }) => {
-    const headers = Object.assign(commonParams(), header);
+    const headers = Object.assign(commonParams(), header)
 
-    let requestParams, body;
+    let requestParams, body
     if (method === 'POST' || method === 'PUT') {
       // post | PUT
       if (json) {
-        requestParams = this.formParamsJson(method, params, headers);
+        requestParams = this.formParamsJson(method, params, headers)
       } else {
-        requestParams = this.formParams(method, params, headers);
+        requestParams = this.formParams(method, params, headers)
       }
-      body = requestParams.body;
+      body = requestParams.body
     } else {
       // get
-      requestParams = this.formParams(method, params, headers);
+      requestParams = this.formParams(method, params, headers)
       if (requestParams.body) {
-        url += `?${requestParams.body}`;
+        url += `?${requestParams.body}`
       }
-      delete requestParams.body;
+      delete requestParams.body
     }
 
-    console.log('HttpManager url: ', url);
-    console.log('HttpManager params: ', params);
-    console.log('HttpManager requestParams: ', requestParams);
+    console.log('HttpManager url: ', url)
+    console.log('HttpManager params: ', params)
+    console.log('HttpManager requestParams: ', requestParams)
     // console.log('HttpManager body: ', body)
 
     // console.log('HttpManager timeoutMs: ', timeoutMs)
@@ -189,13 +189,13 @@ HttpManager.prototype.init = async function () {
         body,
         // your certificates array (needed only in android) ios will pick it automatically
         // sslPinning: sslPinning,
-        headers: requestParams.headers,
+        headers: requestParams.headers
       })
-    );
+    )
     if (response) {
-      console.log('HttpManager url=', url, ' \n fetch response= ', response);
+      console.log('HttpManager url=', url, ' \n fetch response= ', response)
       if (text) {
-        return Promise.resolve(response.text());
+        return Promise.resolve(response.text())
       } else {
         if (
           response instanceof Error ||
@@ -204,42 +204,42 @@ HttpManager.prototype.init = async function () {
           console.log(
             'HttpManager.js response instanceof Error || response.status !== netwrokCode.SUCCESS err=',
             err
-          );
+          )
 
           if (response instanceof Error) {
-            console.log('HttpManager.js response instanceof Error ');
-            return Promise.reject(response);
+            console.log('HttpManager.js response instanceof Error ')
+            return Promise.reject(response)
           } else {
             const [err_responseJson, responseJson] = await tool.to(
               response.json()
-            ); // response.status !== netwrokCode.SUCCESS
+            ) // response.status !== netwrokCode.SUCCESS
             console.log(
               'HttpManager.js response.status !== netwrokCode.SUCCESS response.status=',
               response.status,
               ' responseJson=',
               responseJson
-            );
+            )
             return Promise.reject({
               responseJson,
               totalUrl: url,
-              header: requestParams,
-            });
+              header: requestParams
+            })
           }
         } else {
           //
           const [err_responseJson, responseJson] = await tool.to(
             response.json()
-          ); // Serialized the return value
+          ) // Serialized the return value
           if (err_responseJson || !responseJson) {
             console.log(
               'HttpManager.js Failed to serialize return value responseJson=',
               responseJson
-            );
+            )
             return Promise.reject({
               responseJson,
               totalUrl: url,
-              header: requestParams,
-            });
+              header: requestParams
+            })
           } else {
             // console.log('After the returned parameters are serialized=: ', responseJson)
             if (response.status === 200) {
@@ -247,19 +247,19 @@ HttpManager.prototype.init = async function () {
               console.log(
                 'HttpManager fetch success responseJson=',
                 responseJson
-              );
+              )
               return Promise.resolve({
                 responseJson,
                 totalUrl: url,
-                header: requestParams,
-              });
+                header: requestParams
+              })
             }
           }
         }
       }
     } else {
-      console.log(`HttpManager fetch error= ${err}`);
-      return Promise.reject({ err, totalUrl: url, header: requestParams });
+      console.log(`HttpManager fetch error= ${err}`)
+      return Promise.reject({ err, totalUrl: url, header: requestParams })
     }
 
     // if (text) { //
@@ -292,17 +292,17 @@ HttpManager.prototype.init = async function () {
     //     return Promise.resolve({ responseJson, totalUrl: url, header: requestParams })
     //   }
     // }
-  };
-};
+  }
+}
 
 const singleton = function () {
-  let instance;
+  let instance
   return function () {
     if (!instance) {
-      instance = new HttpManager();
+      instance = new HttpManager()
     }
-    return instance;
-  };
-};
+    return instance
+  }
+}
 
-export default new singleton()();
+export default new singleton()()

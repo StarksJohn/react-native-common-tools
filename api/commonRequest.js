@@ -1,9 +1,21 @@
-import { View, Image, StyleSheet, Platform } from 'react-native';
-import tool from '../tools/tool';
-import HttpManager from './HttpManager';
-import * as netwrokCode from './netwrokCode';
-import * as stringTools from '../tools/stringTools';
+import { View, Image, StyleSheet, Platform } from 'react-native'
+import tool from '../tools/tool'
+import HttpManager from './HttpManager'
+import * as netwrokCode from './netwrokCode'
+import * as stringTools from '../tools/stringTools'
 
+/**
+ *
+ * @param url
+ * @param params
+ * @param method
+ * @param timeoutMs
+ * @param text
+ * @param promptForCustomToast
+ * @param header
+ * @param token
+ * @returns {Promise<unknown>}
+ */
 export default async function ({
   url,
   params = {},
@@ -12,7 +24,7 @@ export default async function ({
   text = false,
   promptForCustomToast = false,
   header,
-  token,
+  token
 }) {
   // Add the public parameters to be passed in each api
   const initCommonParams =
@@ -28,7 +40,7 @@ export default async function ({
           // platform: Platform.OS,
           // 'access-token': auth.access_token
         }
-      : {};
+      : {}
 
   // if (!stringTools.isNull(auth.access_token) && (method === 'POST' || method === 'PUT')) {
   //   url = `${url}?access-token=${auth.access_token}`
@@ -43,14 +55,14 @@ export default async function ({
       url: url,
       params: /* (params instanceof Array) ? params : */ {
         ...params,
-        ...initCommonParams,
+        ...initCommonParams
       },
       method,
       timeoutMs,
       text,
-      header,
+      header
     })
-  );
+  )
 
   if (res) {
     // success
@@ -68,9 +80,9 @@ export default async function ({
       res,
       ' \n [err]',
       err
-    );
+    )
 
-    return Promise.resolve(res.responseJson);
+    return Promise.resolve(res.responseJson)
   } else {
     // fail
     console.log(
@@ -85,33 +97,33 @@ export default async function ({
       params,
       ' \n' + ' [err]',
       err
-    );
-    let code = err.responseJson.data?.code;
+    )
+    let code = err.responseJson.data?.code
     if (!code) {
-      code = err.responseJson.code;
+      code = err.responseJson.code
     }
-    let message = err.responseJson.data?.message;
+    let message = err.responseJson.data?.message
     if (!message) {
-      message = err.responseJson.message;
+      message = err.responseJson.message
     }
     if (err instanceof Error) {
-      return Promise.reject(message);
+      return Promise.reject(message)
     } else if (code === netwrokCode.NETWORK_TIMEOUT) {
-      return Promise.reject(message);
+      return Promise.reject(message)
     } else if (code === netwrokCode.NETWORK_ERROR) {
-      return Promise.reject(message);
+      return Promise.reject(message)
     } else if (code === netwrokCode.PARAM_BLANK) {
       if (!promptForCustomToast) {
       }
-      return Promise.reject(message);
+      return Promise.reject(message)
     } else if (
       code === netwrokCode.USER_BANNED ||
       code === netwrokCode.TOKEN_EXPIRED ||
       code === netwrokCode.Unauthorized
     ) {
-      return Promise.reject(err.responseJson.data);
+      return Promise.reject(err.responseJson.data)
     } else {
-      return Promise.reject(err.responseJson.data);
+      return Promise.reject(err.responseJson.data)
     }
   }
 }
