@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo, memo, useCallback, forwardRef, useImperativeHandle } from 'react'
 import { Image, View, SafeAreaView, StyleSheet, Text, TouchableOpacity, ImageBackground } from 'react-native'
 import PropTypes from 'prop-types'
-import MyStyleSheet from '../../styles/MyStyleSheet.js'
-import objTools from '../../tools/objTools.js'
-import tool from '../../tools/tool.js'
+import MyStyleSheet from '../../styles/MyStyleSheet'
+import objTools from '../../tools/objTools'
+import tool from '../../tools/tool'
 import { LargeList } from 'react-native-largelist'
 import { ChineseWithLastDateHeader, ChineseWithLastDateFooter } from 'react-native-spring-scrollview/Customize'
 

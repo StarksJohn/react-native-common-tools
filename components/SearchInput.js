@@ -5,7 +5,6 @@ import { StyleSheet, TextInput, View } from 'react-native'
 import ViewPropTypes from './ViewPropTypes'
 import PureComponent from './PureComponent'
 import _SearchInput from 'teaset/components/SearchInput/SearchInput'
-import { dp } from '../tools/screenTools'
 import appStyle from '../styles/appStyle'
 
 // 带 右侧 X按钮的 自定义 搜索控件，为了点击外部区域收起键盘，外层用 可用 Button 包起来
@@ -201,9 +200,9 @@ export default class SearchInput extends PureComponent {
 const styles = StyleSheet.create({
   _xBtStyle: {
     position: 'absolute',
-    right: dp(10),
-    width: dp(30),
-    height: dp(30)
+    right: (10),
+    width: (30),
+    height: (30)
     // backgroundColor: _styles.randomColor()
   }
 })

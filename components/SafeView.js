@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import appStyle from '../styles/appStyle'
 import AvoidBlankSpaceAtTheBottomOfSafeAreaView from './AvoidBlankSpaceAtTheBottomOfSafeAreaView'
 
-const { dp } = appStyle
 
 /**
  * PureComponent

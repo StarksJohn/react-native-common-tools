@@ -1,10 +1,11 @@
 import _ from 'lodash'
 
 // 删除 obj对象里的 和 keys 数组 里 同名的 属性, 生成新的  对象
-const omit = (obj, keys) => {
+const omit = (obj: { [x: string]: any }, keys: string | string[]) => {
   return Object.keys(obj)
     .reduce((result, key) => {
       if (!keys.includes(key)) {
+        // @ts-ignore
         result[key] = obj[key]
       }
       return result
@@ -18,9 +19,10 @@ const omit = (obj, keys) => {
  * @returns {*}
  * @constructor
  */
-const DeepMergeNoExtraProps = (obj1, obj2) => {
+const DeepMergeNoExtraProps = (obj1: string | any[], obj2: any) => {
   if (Object.prototype.toString.call(obj1) === '[object Object]' && Object.prototype.toString.call(obj2) === '[object Object]') {
     for (let prop2 in obj2) { // obj1无值,都有取obj2
+      // @ts-ignore
       if (!obj1[prop2]) { // obj1 里没有 obj2.prop2 属性
         // obj1[prop2] = obj2[prop2];
       } else { // 递归赋值
@@ -41,13 +43,15 @@ const DeepMergeNoExtraProps = (obj1, obj2) => {
  * @param obj
  * @returns {[]}
  */
-const deepCopy = (obj) => {
+const deepCopy = (obj: { [x: string]: any; hasOwnProperty: (arg0: string) => any }) => {
   let result = Array.isArray(obj) ? [] : {}
   for (let key in obj) {
     if (obj.hasOwnProperty(key)) {
       if (typeof obj[key] === 'object' && obj[key] !== null) {
+        // @ts-ignore
         result[key] = deepCopy(obj[key])   //递归复制
       } else {
+        // @ts-ignore
         result[key] = obj[key]
       }
     }
@@ -55,7 +59,7 @@ const deepCopy = (obj) => {
   return result
 }
 
-const isEmpty = (value) => {
+const isEmpty = (value: string | any[]) => {
   if (_.isNumber(value) || _.isBoolean(value)) {
     return false
   }
@@ -68,7 +72,7 @@ const isEmpty = (value) => {
   return _.isEmpty(value)
 }
 
-const isNotEmpty = (value) => {
+const isNotEmpty = (value: string | any[]) => {
   return !isEmpty(value)
 }
 

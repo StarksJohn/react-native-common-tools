@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import appStyle from '../../styles/appStyle'
 import ViewPropTypes from '../ViewPropTypes'
 
-const { dp } = appStyle
 
 useSubscribeKeyboard.propTypes = {}
 

@@ -9,10 +9,10 @@
  * @param min
  * @param max
  */
-export function randomNums (min, max) {
+export function randomNums (min: number, max: number) {
   // let a= parseInt(Math.random()*(max-min+1)+min,10);
   //  Log.log('a==='+a);
-  let b = Math.floor(Math.random() * (max - min + 1) + min)
+  const b = Math.floor(Math.random() * (max - min + 1) + min)
   // Log.log('b===' + b);
   // showToast('产生新随机数===' + b);
   return b
@@ -24,7 +24,7 @@ export function randomNums (min, max) {
  * @returns {Number}
  * @constructor
  */
-export function Math_parseInt (n) {
+export function Math_parseInt (n: string) {
   return parseInt(n)
 }
 
@@ -34,7 +34,7 @@ export function Math_parseInt (n) {
  * @param digit 小数点右边需要 保留几位
  * @constructor
  */
-export function KeepDigitsDecimalPlaces (nums, digit) {
+export function KeepDigitsDecimalPlaces (nums: number, digit: number) {
   return nums.toFixed(digit)
 }
 
@@ -42,7 +42,8 @@ export function KeepDigitsDecimalPlaces (nums, digit) {
  * 把 nums 数字 改成 小数点右边保留 digit 位小数 && 不四舍五入小数点2位右边的
  * @param nu
  */
-export function noRounding (num, digit) {
+export function noRounding (num: number, digit: number | undefined) {
+  // @ts-ignore
   const res = (parseInt(num * 100) / 100).toFixed(digit)
   // console.log('noRounding num=', num, ' digit=', digit, ' res=', res)
   return res
@@ -63,7 +64,7 @@ export function noRounding (num, digit) {
  * @param str
  * @returns {*}
  */
-export function strToNum (str) {
+export function strToNum (str: string) {
   return parseInt(str)
 }
 
@@ -71,6 +72,6 @@ export function strToNum (str) {
  * 返回 一个数字 被 小数点 切割后的 数组，可判断是否 有 小数点
  * @param num
  */
-export function isDot (num) {
+export function isDot (num: { toString: () => any }) {
   return (num.toString()).split('.')
 }

@@ -11,7 +11,7 @@ import *as stringUtils from './stringTools'
 /**
  * 任何地方都可调用的 发送 某个消息的 方法
  */
-export const sendEvent =  (eventName, extraInfo = {}) =>{
+export const sendEvent =  (eventName: string, extraInfo = {}) =>{
   DeviceEventEmitter.emit(eventName, { ...extraInfo, eventName })
 }
 
@@ -29,23 +29,28 @@ export default class EventListener {
    *
    * @param props {eventName:'', eventCallback:()=>{} }
    */
-  constructor (props) {
+  constructor (props: { eventName: string; eventCallback: any }) {
     const { eventName, eventCallback } = props
+    // @ts-ignore
     this.state = {
       eventName, eventCallback
     }
+    // @ts-ignore
     this.listener = DeviceEventEmitter.addListener(eventName, (p) => {
       this.eventCallback(p, this)
     })
   }
 
-  eventCallback (p, self) {
+  eventCallback (p: { eventName: string }, self: this) {
+    // @ts-ignore
     if (!stringUtils.isNull(p.eventName) && p.eventName === self.state?.eventName) {
+      // @ts-ignore
       self.state?.eventCallback(p)
     }
   }
 
   removeEventListener () {
+    // @ts-ignore
     this.listener.remove()
   }
 }

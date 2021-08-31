@@ -5,7 +5,6 @@ import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import appStyle from '../styles/appStyle'
 
-const { dp } = appStyle
 
 /**
  * PureComponent
@@ -41,7 +40,7 @@ const AvoidBlankSpaceAtTheBottomOfSafeAreaView = ({color }, parentRef) => {
 
   //render
   return (
-    <View style={{ width: '100%', height: dp(200), position: 'absolute', bottom: 0, backgroundColor: color }} />
+    <View style={{ width: '100%', height: (200), position: 'absolute', bottom: 0, backgroundColor: color }} />
   )
 }
 

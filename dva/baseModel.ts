@@ -3,6 +3,13 @@ import objTools from '../tools/objTools'
 import tool from '../tools/tool'
 import asyncStorage from '../tools/asyncStorage'
 
+interface initCacheProps {
+  // any props that come into the component
+  namespace:string,
+  dispatch(p:object):void
+  attributesToBeCached:string[]
+}
+
 /**
  *  * https://dvajs.com/api/#model
  */
@@ -28,14 +35,15 @@ export default {
   },
   baseSubscriptions: {
     // 初始化缓存
-    initCache: ({ namespace, dispatch, history, attributesToBeCached }) => {
+    initCache: (props: initCacheProps) => {
+      const {namespace,attributesToBeCached,dispatch}=props
       console.log(
         'baseModel.js subscriptions initCache namespace=',
         namespace,
         ' attributesToBeCached=',
         attributesToBeCached
       )
-      _.forEach(attributesToBeCached, async (key) => {
+      _.forEach(attributesToBeCached, async (key: string) => {
         console.log('baseModel.js initCache forEach key=', key)
         const [e_value, value] = await tool.to(asyncStorage.getItem(key))
         console.log(

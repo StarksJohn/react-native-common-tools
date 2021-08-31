@@ -7,7 +7,7 @@ import tool from './tool'
  * @param value 最好是 str 类型，其他类型真机ios 报错
  * @returns {Promise<void | *>}
  */
-const setItem = async (key, value) => {
+const setItem = async (key: string, value: string) => {
   try {
     console.log('asyncStorage.js setItem key=', key, ' value=', value)
     console.log('asyncStorage.js setItem key= typeof value=', typeof value)
@@ -15,6 +15,7 @@ const setItem = async (key, value) => {
       // alert('setItem 参数不是 str 类型,value=', value)
       // console.log('setItem 参数不是 str 类型,value=', value, ' key=', key)
       console.log('asyncStorage.js setItem key=', key, ' value不存在')
+      // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject('setItem value不存在')
     } else if (typeof value !== 'string') {
       console.log('asyncStorage.js setItem value !== string')
@@ -49,6 +50,7 @@ const setItem = async (key, value) => {
       }
     } else {
       console.log('asyncStorage.js setItem key=', key, ' value=', value)
+      // eslint-disable-next-line no-unused-vars
       const [err, res] = await tool.to(AsyncStorage.setItem(key, value))
       if (err) {
         return Promise.reject(err)
@@ -59,15 +61,16 @@ const setItem = async (key, value) => {
   } catch (e) {
     // saving error
     // throw new Error(`缓存 key=${key}的 失败`);
+    // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject(`缓存 key=${key}的 失败`)
   }
 }
 
-const removeItem = async (key) => {
+const removeItem = async (key: string) => {
   await AsyncStorage.removeItem(key)
 }
 
-const getItem = async (key) => {
+const getItem = async (key: string) => {
   try {
     const value = await AsyncStorage.getItem(key)
     if (value !== null) {
@@ -97,6 +100,7 @@ const getItem = async (key) => {
     // error reading value
     // throw new Error(`未找到 key=${key}的 缓存`)
     console.log(`未找到 key=${key}的 缓存`)
+    // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject(null)
   }
 }

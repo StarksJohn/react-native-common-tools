@@ -28,46 +28,45 @@ export default function ({
         ref={v => this.r_twiceConfirmBox = v}
       >
         <View style={{
-          width: dp(270), // height: gScaleSize(100),
+          width: (270), // height: gScaleSize(100),
           alignItems: 'center', // paddingHorizontal: gScaleSize(10),
           backgroundColor: 'white',
           // backgroundColor: appStyle.randomColor(),
-          borderRadius: dp(10) // maxHeight: gScaleSize(300),
+          borderRadius: (10) // maxHeight: gScaleSize(300),
         }}
         >
           {
             !stringTools.isNull(title) && <Text style={[{
-              fontSize: dp(16),
+              fontSize: (16),
               color: '#333333',
               alignSelf: 'center',
               fontFamily: 'PingFangSC-Medium',
-              marginTop: dp(15)
+              marginTop: (15)
             }, titleStyle]}
             >{title}</Text>
           }
           {
             renderText ? renderText() : <Text style={[{
-              fontSize: dp(14), // backgroundColor: gRandomColor(),
+              fontSize: (14), // backgroundColor: gRandomColor(),
               color: '#666666',
-              marginBottom: dp(10),
+              marginBottom: (10),
               maxWidth: '85%',
               alignSelf: 'center',
               textAlign: 'left',
-              marginTop: dp(10),
-              lineHeight: dp(18)
+              marginTop: (10),
+              lineHeight: (18)
             }, textStyle]}
             >{text}</Text>
           }
 
           <View style={[{
             width: '100%',
-            height: dp(0.5),
+            height: (0.5),
             backgroundColor: '#E6E6E6'
-            // marginTop: dp(10)
           }, horizontalLineStyle]}
           />
           <View
-            style={{ width: '100%', height: dp(50), flexDirection: 'row' }}
+            style={{ width: '100%', height: (50), flexDirection: 'row' }}
           >
             {
               cancleText && <TextBt
@@ -76,7 +75,7 @@ export default function ({
                 }}
                 disable={false}
                 textStyle={{
-                  fontSize: dp(16),
+                  fontSize: (16),
                   color: '#CCCCCC',
                   fontFamily: 'PingFangSC-Medium'
                 }} title={cancleText}
@@ -94,7 +93,7 @@ export default function ({
                 }}
                 disable={false}
                 textStyle={{
-                  fontSize: dp(16),
+                  fontSize: (16),
                   color: appStyle.appThemeColor,
                   fontFamily: 'PingFangSC-Medium'
                 }} title={confirmtext}

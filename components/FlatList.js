@@ -16,7 +16,6 @@ import constant from "../constant/constant";
 import tool from "../tools/tool";
 import appStyle from "../styles/appStyle";
 
-const { dp } = appStyle;
 
 const _refreshControlStyle = {
   // backgroundColor: '#F5F5F5',
@@ -699,7 +698,7 @@ export default class _FlatList extends PureComponent {
                   style={{
                     flex: 1,
                     width: "100%",
-                    height: dp(appStyle.screenHeight),
+                    height: (appStyle.screenHeight),
                     // backgroundColor: gRandomColor()
                   }}
                 />

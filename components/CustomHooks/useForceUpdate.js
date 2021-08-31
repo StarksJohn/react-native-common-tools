@@ -3,7 +3,6 @@ import { Image, View, SafeAreaView, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import appStyle from '../../styles/appStyle'
 
-const { dp } = appStyle
 
 useForceUpdate.propTypes = {}
 

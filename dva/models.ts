@@ -8,12 +8,13 @@ import modelTools from './modelTools'
 export default function (modelList = []) {
   const modelContainer = {}
 
-  _.forEach(modelList, (it) => {
+  _.forEach(modelList, (it: { namespace: string; attributesToBeCached: [] }) => {
     console.log('models.ts forEach it=', it)
 
     const namespace = _.isString(it) ? it : it.namespace
     console.log('models.ts namespace=', namespace)
 
+    // @ts-ignore
     let modelObj = modelTools.createDefault({
       namespace,
       attributesToBeCached: it.attributesToBeCached
@@ -21,6 +22,7 @@ export default function (modelList = []) {
     if (!_.isString(it)) {
       modelObj = _.merge(modelObj, it)
     }
+    // @ts-ignore
     modelContainer[namespace] = modelObj
   })
   const models = _.values(modelContainer)

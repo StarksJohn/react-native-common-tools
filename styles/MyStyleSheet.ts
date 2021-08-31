@@ -20,14 +20,16 @@ XWidget.initResource('') // 网络图片的 Baseurl ,设置了之后，用图片
       });
  */
 const MyStyleSheet = {
-  create (style) {
+  create (style: { row: { flex: number; justifyContent: string; alignItems: string } | { flex: number; height: number; justifyContent: string; alignItems: string }; mediaWrapper?: { width: string; height: string }; loadingImg?: { width: number; height: number }; line?: { position: string; left: number; right: number; bottom: number; height: number; backgroundColor: string }; v?: { width: number; height: number; backgroundColor: string }; text?: { color: string; alignSelf: string; fontSize: number }; input?: { height: number; backgroundColor: string } }) {
     console.log('MyStyleSheet.js create style=', style)
     const s = style
     let outKey
     for (outKey in s) {
+      // @ts-ignore
       s[outKey] = ResetStyle(s[outKey])
     }
     console.log('MyStyleSheet.js s=', JSON.stringify(s))
+    // @ts-ignore
     return StyleSheet.create(s)
   }
 }

@@ -1,11 +1,11 @@
 import { create } from 'dva-core'
 
-let app
-let store
+let app: { model: (arg0: any) => any; use: (arg0: { onError(err: any): void }) => void; start: () => void; _store: any; getStore: { (): { (): any; new(): any; getState: { (): any; new(): any } }; dispatch: any; }; dispatch: (arg0: any) => any }
+let store: { dispatch: any }
 let dispatch
-let registered
+let registered: boolean
 
-function createApp (opt) {
+function createApp (opt: { models: any[] }) {
   // redux 的日志
   // if (opt.enableLog) {
   //   opt.onAction = [createLogger()]
@@ -30,6 +30,7 @@ function createApp (opt) {
   app.start()
 
   store = app._store
+  // @ts-ignore
   app.getStore = () => store
 
   dispatch = store.dispatch
@@ -42,7 +43,7 @@ function createApp (opt) {
 export default {
   createApp,
   // 任何地方都可以访问到dispatch
-  getDispatch (p) {
+  getDispatch (p: object) {
     return app.dispatch(p)
   },
   // 任何地方都可访问到的所有model的 集合

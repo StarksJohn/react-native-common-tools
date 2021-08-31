@@ -15,7 +15,7 @@ import {  BackHandler, } from 'react-native'
  * @constructor
  */
 let lastClickTime = (new Date()).valueOf();
-export default function useAndroidBackHandler (props) {
+export default function useAndroidBackHandler (props: { navigation: any; handleBackPress: any; }) {
   const { navigation, handleBackPress/*此方法在外部定义时也要 return true,才能 拦截具体页面的 退出事件*/ } = props
 
   const _handleBackPress = useCallback(() => {

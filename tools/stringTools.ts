@@ -12,7 +12,7 @@ String.prototype.sf_ltrim = function () {
 };
 
 // 只去除字符串右边空白
-String.prototype.sf_rtrim = function () {
+String.prototype.sf_ltrim = function () {
   return this.replace(/(\s*$)/g, '');
 };
 
@@ -21,7 +21,7 @@ String.prototype.sf_rtrim = function () {
  * /https://blog.csdn.net/weixin_44819874/article/details/108586738
  * @returns {string}
  */
-String.prototype.sf_trim = function () {
+String.prototype.sf_ltrim = function () {
   return this.replace(/(^\s*)|(\s*$)/g, '').replace(/\s/g, '');
 };
 
@@ -30,12 +30,12 @@ String.prototype.sf_trim = function () {
  * @param str
  * @param text
  */
-export function search(str, text) {
+export function search(str: string, text: any) {
   return str.search(text);
 }
 
 //  根据个数截取字符串，兼容中英文 http://www.52doit.com/show/457
-export function cutStr(str, len) {
+export function cutStr(str: string, len: number) {
   let str_length = 0;
 
   let str_cut = '';
@@ -93,7 +93,7 @@ String.prototype.sf_findOneIndex = function (str) {
  * @param str2
  * @returns {boolean}
  */
-export function contain(str1, str2) {
+export function contain(str1: any, str2: any) {
   // indexOf: str第一次在str1里出现的下标
   // return str1.indexOf(str2) > 0
   //
@@ -110,13 +110,13 @@ export function contain(str1, str2) {
  * @param subStr
  * @returns {*}
  */
-export function coverString(str, subStr) {
+export function coverString(str: any, subStr: string) {
   const reg = eval('/' + subStr + '/ig');
   return reg.test(str);
 }
 
 // 16进制数转10进制
-export function ex16hex(value) {
+export function ex16hex(value: string) {
   value = stripscript(value);
   value = value.replace('0x', '');
   var arr = value.split('');
@@ -132,7 +132,7 @@ export function ex16hex(value) {
 }
 
 // 返回 v 乘以 n 个 16 的积
-export function muti16(v, n) {
+export function muti16(v: number, n: number) {
   var temp = v;
   for (var i = 0; i < n; i++) {
     temp *= 16;
@@ -141,7 +141,7 @@ export function muti16(v, n) {
 }
 
 // 过滤所有特殊字符
-export function stripscript(s) {
+export function stripscript(s: string) {
   var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？↵\r\n]");
   var rs = '';
   for (var i = 0; i < s.length; i++) {
@@ -151,7 +151,7 @@ export function stripscript(s) {
 }
 
 // 字符转16进制数字
-export function hex_change(v) {
+export function hex_change(v: string) {
   var res;
   switch (v) {
     case 'a':
@@ -196,7 +196,7 @@ export function hex_change(v) {
  * @param val
  * @returns {number} 返回的长度是按英文字符判断的,如 中国china=9
  */
-export function getStrLen(val) {
+export function getStrLen(val: string) {
   let len = 0;
   for (var i = 0; i < val.length; i++) {
     var a = val.charAt(i);
@@ -210,7 +210,7 @@ export function getStrLen(val) {
 }
 
 //  获取字符串长度，兼容中英文 http://www.52doit.com/show/457, 和 getStrLen 方法结果一样
-export function getLength(str) {
+export function getLength(str: string) {
   var real_length = 0;
 
   var char_code = -1;
@@ -245,7 +245,7 @@ String.prototype.sf_getLength = function () {
  * @param val
  * @returns {boolean}
  */
-export function isContainChinese(val) {
+export function isContainChinese(val: string) {
   let b = false;
   for (var i = 0; i < val.length; i++) {
     var a = val.charAt(i);
@@ -256,7 +256,7 @@ export function isContainChinese(val) {
   return b;
 }
 
-export function encodeStringContainingChinese(str) {
+export function encodeStringContainingChinese(str: string) {
   let res = str;
   if (!isNull(str) && isContainChinese(str)) {
     res = encodeURI(str);
@@ -269,9 +269,9 @@ export function encodeStringContainingChinese(str) {
  * @param text
  * @returns {boolean}
  */
-export function isAllNum(val) {
-  console.log('stringTools.js isAllNum str=', str);
-  const n = Number(str);
+export function isAllNum(val: any) {
+  console.log('stringTools.js isAllNum val=', val);
+  const n = Number(val);
   if (!isNaN(n)) {
     console.log('stringTools.js isAllNum ok');
     return true;
@@ -285,7 +285,7 @@ export function isAllNum(val) {
  * https://www.cnblogs.com/mouseleo/p/12891426.html
  * @param str
  */
-export function regularMatchesTheNumbers(str) {
+export function regularMatchesTheNumbers(str: string) {
   const num = parseFloat(str.replace(/[^\d]/g, ' '));
   console.log('stringTools.js regularMatchesTheNumbers str=', str, ' num=', num);
   return num;
@@ -296,7 +296,8 @@ export function regularMatchesTheNumbers(str) {
  * http://www.jb51.net/article/86543.htm
  * @param str
  */
-export function isNull(str) {
+export function isNull(str: string) {
+  // @ts-ignore
   return (
     !str ||
     str.length === 0 ||
@@ -310,6 +311,7 @@ export function isNull(str) {
 
 // 外部 调用时 是 xxx.isNull()
 String.prototype.isNull = function () {
+  // @ts-ignore
   return (
     !this ||
     this.length === 0 ||
@@ -326,7 +328,7 @@ String.prototype.isNull = function () {
  * @param value
  * @returns {string}
  */
-export function anyThingToString(value) {
+export function anyThingToString(value: any) {
   return String(value);
 }
 
@@ -335,7 +337,7 @@ export function anyThingToString(value) {
  * @param phoneNumber ：str
  * @returns {{isValid: boolean, msg: string}}
  */
-export function checkPhoneNumber(phoneNumber) {
+export function checkPhoneNumber(phoneNumber: string) {
   let msg = '';
   if (typeof phoneNumber === 'string') {
     if (isNull(phoneNumber)) {
@@ -362,6 +364,7 @@ export function checkPhoneNumber(phoneNumber) {
  */
 String.prototype.sf_RMB = function () {
   let s = this;
+  // @ts-ignore
   if (/[^0-9\.]/.test(s)) {
     return 'invalid value';
   }
@@ -369,6 +372,7 @@ String.prototype.sf_RMB = function () {
   s = (s + '00').replace(/(\d*\.\d\d)\d*/, '$1');
   s = s.replace('.', ',');
   let re = /(\d)(\d{3},)/;
+  // @ts-ignore
   while (re.test(s)) {
     s = s.replace(re, '$1,$2');
   }
@@ -387,13 +391,17 @@ String.prototype.sf_equalsIgnoreCase = function (str) {
 // http://www.jb51.net/article/68694.htm  JavaScript检测字符串中是否含有html标签
 String.prototype.sf_checkHtml = function () {
   let reg = /<[^>]+>/g;
+  // @ts-ignore
   return reg.test(this);
 };
 
 // 检测 字符串 是否是 url 地址
 String.prototype.sf_checkUrl = function () {
+  // @ts-ignore
   let RegUrl = new RegExp();
+  // @ts-ignore
   RegUrl.compile('^[A-Za-z]+://[A-Za-z0-9-_]+\\.[A-Za-z0-9-_%&?/.=]+$');
+  // @ts-ignore
   if (!RegUrl.test(this)) {
     return false;
   }
@@ -403,7 +411,8 @@ String.prototype.sf_checkUrl = function () {
 /**
  * 从 str里 找出 substr,返回 数组，数组元素就是 用 substr 分隔出来的 富文本 数据
  */
-export function richText(str, subStr) {
+export function richText(str: string, subStr: string | any[]) {
+  // @ts-ignore
   let startIndex = str.search(subStr);
   let arr = [];
   if (startIndex === -1) {
@@ -427,14 +436,14 @@ export function richText(str, subStr) {
  * 截取 linkingUrl 信息,linkingUrl 有 web 端的 https://github.com/suanmei/callapp-lib 库唤起，demo 在 https://git.adxliangmei.com/chenweiyu/official-website
  * 项目的h5loadapp分支
  */
-export function cutLinkingUrl() {
-  if (!gConstant.app.linkingUrl) {
+export function cutLinkingUrl(linkingUrl: string) {
+  if (!linkingUrl) {
     return null;
   }
   let host = null,
     params = {},
     path = null;
-  let arr = gConstant.app.linkingUrl.split('//');
+  let arr = linkingUrl.split('//');
   if (arr.length > 1) {
     host = arr[0];
     let arr1 = arr[1].split('?');
@@ -447,6 +456,7 @@ export function cutLinkingUrl() {
           if (arrs.length > 1) {
             let key = arrs[0],
               values = arrs[1];
+            // @ts-ignore
             params[key] = values;
           }
         });
@@ -464,7 +474,7 @@ export function cutLinkingUrl() {
  * 隐藏手机号部分信息
  * @param phone
  */
-export function hidePhoneNum(phone) {
+export function hidePhoneNum(phone: string) {
   return phone.substring(0, 3) + '****' + phone.substring(7, phone.length);
 }
 
@@ -474,7 +484,7 @@ export function hidePhoneNum(phone) {
  * @param emailAddr 输入的email地址
  * @return true/false。
  */
-export function emailCheck(emailAddr) {
+export function emailCheck(emailAddr: string | string[] | null) {
   if (emailAddr == null || emailAddr.length < 2) {
     return false;
   }
@@ -499,7 +509,7 @@ export function emailCheck(emailAddr) {
  * @param str_url
  * @returns {boolean}
  */
-export function isContainsURL(str_url) {
+export function isContainsURL(str_url: string) {
   const strRegex =
     '((https|http|ftp|rtsp|mms)?://)' +
     "(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" + //ftp的user@
@@ -528,7 +538,7 @@ export function isContainsURL(str_url) {
  * 解析淘口令里的 http 链接
  * @param text
  */
-export function parseUrlFromTaoKouLing(text) {
+export function parseUrlFromTaoKouLing(text: string) {
   // const reg = /([http|https]*?:\/\/m\.tb\.cn\/[(?:s\/){0,1}|(share)]*(?:[0-9a-zA-Z?=&])+)(?:.+:(?:\s)*)?([a-zA-Z]{4})?/;
   const index = text.search('http');
   const url = text.substring(index, index + 35);
@@ -542,7 +552,7 @@ export function parseUrlFromTaoKouLing(text) {
  * @param url
  * @returns {null|{path: string, host: string, params: string}}
  */
-export function parseUrl(url) {
+export function parseUrl(url: string) {
   if (isNull(url)) {
     return null;
   }
@@ -575,7 +585,7 @@ export function parseUrl(url) {
  * @param params ：'?xxx=xxx&xxx=xxx'
  * @param targetP： 要查询 的 指定参数
  */
-export function getUrlParam(params, targetP) {
+export function getUrlParam(params: string, targetP: string) {
   const reg = new RegExp('(^|&)' + targetP + '=([^&]*)(&|$)'); //构造一个含有目标参数的正则表达式对象
   const r = params.match(reg); //匹配目标参数
   console.log('getUrlParam r=', r);
@@ -600,7 +610,7 @@ String.prototype.removeLineFeed = function () {
  * @param newStr
  * @returns {*}
  */
-export function insertStr(soure, start, newStr) {
+export function insertStr(soure: string | any[], start: any, newStr: any) {
   return soure.slice(0, start) + newStr + soure.slice(start);
 }
 
@@ -609,6 +619,7 @@ export function insertStr(soure, start, newStr) {
  * https://blog.csdn.net/FengNext/article/details/106576736
  */
 String.prototype.isEmoji = function () {
+  // @ts-ignore
   let reg = emojiRegex(
     /[\u{1F601}-\u{1F64F}\u{2702}-\u{27B0}\u{1F680}-\u{1F6C0}\u{1F170}-\u{1F251}\u{1F600}-\u{1F636}\u{1F681}-\u{1F6C5}\u{1F30D}-\u{1F567}]/gu
   );
@@ -628,7 +639,7 @@ String.prototype.isEmoji = function () {
  * @param str
  * @returns {number}
  */
-export function getBLen(str) {
+export function getBLen(str: string | null) {
   if (str == null) {
     return 0;
   }
@@ -643,7 +654,7 @@ export function getBLen(str) {
  * 判断字符串是否为JSON格式
  * @param str
  */
-export function isJsonStr(str) {
+export function isJsonStr(str: string) {
   if (typeof str === 'string') {
     try {
       let obj = JSON.parse(str);
@@ -662,3 +673,7 @@ export function isJsonStr(str) {
     }
   }
 }
+function alert(arg0: string) {
+    throw new Error('Function not implemented.');
+}
+

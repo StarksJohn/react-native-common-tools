@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo, memo, useCallback, forward
 import { } from 'react-native'
 import PropTypes from 'prop-types'
 import { SpringScrollView } from 'react-native-spring-scrollview'
-import MyStyleSheet from '../../styles/MyStyleSheet.js'
+import MyStyleSheet from '../../styles/MyStyleSheet'
 
 /**
  * PureComponent

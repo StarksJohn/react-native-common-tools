@@ -20,15 +20,15 @@ export const deviceHeight = Dimensions.get('window').height
  * @param designPx
  * @returns {number}
  */
-export function dp (designPx) {
-  // return PixelRatio.roundToNearestPixel((designPx * 2 / 750) * deviceWidth) //
-  return scaleSize(designPx)
-}
+// export function dp (designPx: number) {
+//   // return PixelRatio.roundToNearestPixel((designPx * 2 / 750) * deviceWidth) //
+//   return scaleSize(designPx)
+// }
 
 // 像素密度
 export const DEFAULT_DENSITY = 2
-global.gScreenOrientation = 'PORTRAIT' // 屏幕当前状态   LANDSCAPE | PORTRAIT
-global.PORTRAIT = 'PORTRAIT'
+// global.gScreenOrientation = 'PORTRAIT' // 屏幕当前状态   LANDSCAPE | PORTRAIT
+// global.PORTRAIT = 'PORTRAIT'
 // px转换成dp
 // 以iphone11 基准,如果以其他尺寸为基准的话,请修改下面的750和1334为对应尺寸即可.
 const w2 = 750 / DEFAULT_DENSITY
@@ -44,32 +44,32 @@ const h2 = 1624 / DEFAULT_DENSITY
  * @param size
  * @returns {number}
  */
-const scaleSize = (size) => {
-  const w = deviceWidth // Dimensions.get('window').width
-  const h = deviceHeight // Dimensions.get('window').height
-  const scaleWidth =
-    gScreenOrientation === PORTRAIT
-      ? w / w2
-      : // MathUtils.subtract(w,w2,4) :
-      w / h2
-  // MathUtils.subtract(w,h2,4);
-  const scaleHeight =
-    gScreenOrientation === PORTRAIT
-      ? h / h2
-      : // MathUtils.subtract(h,h2,4)
-    // : MathUtils.subtract(h,w2,4);
-      h / w2
-  const scale = Math.min(scaleWidth, scaleHeight) // 返回 2个 参数中最小的值
-
-  // 可把一个数字舍入为最接近的整数,例如，3.5 将舍入为 4，而 -3.5 将舍入为 -3。
-  size = Math.round(
-    size * scale +
-      // MathUtils.multiply(size,scale,4)
-      0.5
-  ) // 避免精度缺失 +0。5
-  return (size / DEFAULT_DENSITY) * 2
-  // MathUtils.subtract(size,defaultPixel,4)
-}
+// const scaleSize = (size: number) => {
+//   const w = deviceWidth // Dimensions.get('window').width
+//   const h = deviceHeight // Dimensions.get('window').height
+//   const scaleWidth =
+//     gScreenOrientation === PORTRAIT
+//       ? w / w2
+//       : // MathUtils.subtract(w,w2,4) :
+//       w / h2
+//   // MathUtils.subtract(w,h2,4);
+//   const scaleHeight =
+//     gScreenOrientation === PORTRAIT
+//       ? h / h2
+//       : // MathUtils.subtract(h,h2,4)
+//     // : MathUtils.subtract(h,w2,4);
+//       h / w2
+//   const scale = Math.min(scaleWidth, scaleHeight) // 返回 2个 参数中最小的值
+//
+//   // 可把一个数字舍入为最接近的整数,例如，3.5 将舍入为 4，而 -3.5 将舍入为 -3。
+//   size = Math.round(
+//     size * scale +
+//       // MathUtils.multiply(size,scale,4)
+//       0.5
+//   ) // 避免精度缺失 +0。5
+//   return (size / DEFAULT_DENSITY) * 2
+//   // MathUtils.subtract(size,defaultPixel,4)
+// }
 
 // const _isIphoneX = (() => {
 //   const is =
@@ -83,13 +83,6 @@ const scaleSize = (size) => {
 //   return is
 // })()
 
-// Get the height of the status bar
-export function getStatusBarHeight () {
-  return Platform.select({
-    ios: ifIphoneX(44, 20),
-    android: StatusBar.currentHeight
-  })
-}
 
 /**
  *
@@ -106,7 +99,7 @@ export function getStatusBarHeight () {
  * @param androidStyle
  * @returns {*}
  */
-export function ifIphoneX (iphoneXStyle, iosStyle = {}, androidStyle) {
+export function ifIphoneX (iphoneXStyle: object|number, iosStyle :object|number, androidStyle: object|number) {
   return Platform.OS === 'ios' ? _ifIphoneX(iphoneXStyle, iosStyle) : androidStyle
   // if (isIphoneX()) {
   //   return iphoneXStyle
