@@ -100,8 +100,9 @@ Array.prototype.sf_remove = function (val) {
                         return element.id==0
                      }
  */
-const removeObject = (arr, predicateFunc) => {
+const removeObject = (arr:[], predicateFunc: (value: never, index: number, obj: never[]) => unknown) => {
   const index = arr.findIndex(predicateFunc);
+  // @ts-ignore
   arr.sf_removeObjectAtIndex(index);
 };
 
@@ -141,7 +142,7 @@ Array.prototype.sf_indexOf = function (val) {
 Array.prototype.sf_difference = function (arr) {
   return this
     .filter(x => arr.sf_indexOf(x) === -1)
-    .concat(arr.filter(x => this.sf_indexOf(x) === -1))
+    .concat(arr.filter((x: any) => this.sf_indexOf(x) === -1))
 }
 
 /**
@@ -149,7 +150,7 @@ Array.prototype.sf_difference = function (arr) {
  * @param predicateFunc
  * @returns {*}
  */
-const sf_filter = (arr, predicateFunc) => {
+const sf_filter = (arr: any[], predicateFunc: (arg0: any, arg1: any) => any) => {
   return arr.map(
     (value, index, array) => {
       // console.log(value)
@@ -207,7 +208,7 @@ export const sortType = {
    * @returns {number}
    * @constructor
    */
-  NumAscSort (a, b) {
+  NumAscSort (a: number, b: number) {
     return a - b
   },
 
@@ -219,7 +220,7 @@ export const sortType = {
    * @returns {number}
    * @constructor
    */
-  NumDescSort (a, b) {
+  NumDescSort (a: number, b: number) {
     return b - a
   }
 }
@@ -232,8 +233,8 @@ export const sortType = {
  */
 Array.prototype.sf_sortObjectArr = function (key1, key2, sortType = 0/*外部不传此参数时，默认是0，升序排序*/) {
   //by函数接受一个成员名字符串和一个可选的次要比较函数做为参数并返回一个可以用来包含该成员的对象数组进行排序的比较函数，当o[age] 和 p[age] 相等时，次要比较函数被用来决出高下
-  let by = function (key1, key2) {
-    return function (o, p) {
+  let by = function (key1: string | number, key2: { (o: any, p: any): any; (arg0: any, arg1: any): any } | undefined) {
+    return function (o: { [x: string]: any }, p: { [x: string]: any }) {
       let a, b
       if (o && p && typeof o === 'object' && typeof p === 'object') {
         a = o[key1]
@@ -251,6 +252,7 @@ Array.prototype.sf_sortObjectArr = function (key1, key2, sortType = 0/*外部不
     }
   }
 
+  // @ts-ignore
   this.sort(by(key1, by(key2)))
 }
 
@@ -288,13 +290,14 @@ Array.prototype.sf_dedupe = function () {
  * @param obj
  * @returns {*}
  */
-const deepCopyArr = obj => {
+const deepCopyArr = (obj: { [x: string]: any; constructor: ArrayConstructor }) => {
   // return [...this]// 不能用  {...this}，因为 this 是 array类型，深拷贝出来的类型也得是 [] 类型
   var newobj = obj.constructor === Array ? [] : {};
   if (typeof obj !== "object") {
     return;
   }
   for (const i in obj) {
+    // @ts-ignore
     newobj[i] = typeof obj[i] === "object" ? deepCopyArr(obj[i]) : obj[i];
   }
   return newobj;
@@ -350,8 +353,8 @@ Array.prototype.exchangeItemIndex = function (index1, index2) {
 /*
 一维数组变成二维数组
  */
-const oneToTwoDimensional = (array) => {
-  let arr = []
+const oneToTwoDimensional = (array: any[]) => {
+  let arr: any[][] = []
   array && array.map(
     (value, index, array) => {
       if (arr.length > 0) {
@@ -372,8 +375,8 @@ const oneToTwoDimensional = (array) => {
  * 二维数组 变 一维数组
  * @param arr
  */
-const twoToOneArr = (array) => {
-  let arr = []
+const twoToOneArr = (array: any[]) => {
+  let arr: any[] = []
   array && array.map(
     (value, index, array) => {
       if (value instanceof Array) {
@@ -392,7 +395,7 @@ const twoToOneArr = (array) => {
  * http://c.biancheng.net/view/5668.html
  * 数组元素截取，因 slice 方法的截取 传参很恶心，第 1 个参数指定起始下标位置，包括该值指定的元素；第 2 个参数指定结束位置，不包括指定的元素。所以 此方法 的传参 统一成 0开始的 数组下标 [startIndex,endIndex],起始下标和结束下标都包括
  */
-const slice = (startIndex, endIndex, arr) => {
+const slice = (startIndex: number, endIndex: number, arr: string | any[]) => {
   const res = arr.slice(startIndex, endIndex + 1)
   return res
 }
@@ -402,13 +405,28 @@ const slice = (startIndex, endIndex, arr) => {
  * @param arr
  * @returns {*}
  */
-const getLastOne = arr => {
+const getLastOne = (arr: any[]) => {
   return arr.slice(-1)[0];
 };
 
+/**
+ * Create an array of a specified length and fill each item with a default value
+ * The use of generic <T> can ensure that each item in the array is the type of the input defaultValue。
+ * @param length
+ * @param defaultValue
+ * @returns {[]}
+ */
+function createArray<T>(length: number, defaultValue: T): Array<T> {
+  let result: T[] = [];
+  for (let i = 0; i < length; i++) {
+    result[i] = defaultValue;
+  }
+  return result;
+}
+
 export default {
   oneToTwoDimensional, sf_filter, twoToOneArr, slice, removeObject,
-  deepCopyArr,getLastOne
+  deepCopyArr,getLastOne,createArray
 }
 
 

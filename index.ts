@@ -1,6 +1,6 @@
 
 // import baseTimer from './tools/baseTimer'
-// import arrayUtils from './tools/arrayTools'
+import arrayTools from './tools/arrayTools'
 import EventListener, { sendEvent } from './tools/EventListener'
 // import * as stringTools from './tools/stringTools'
 // import * as screenTools from './tools/screenTools'
@@ -64,7 +64,7 @@ export {
   // baseTimer,
   constant,
   ScrollView,
-  // arrayUtils,
+  arrayTools,
   // SectionList,
   EventListener,
   sendEvent,
