@@ -52,7 +52,7 @@ import models from './dva/models'
 import ahooks from './tools/ahooks'
 import routes from './routes/index'
 import MyStyleSheet from './styles/MyStyleSheet'
-import { List, mockData } from './components/List/index'
+import { List, one_section_array } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
 import * as request from './api/request'
 
@@ -110,6 +110,6 @@ export {
   routes,
   MyStyleSheet,
   List,
-  mockData,
+  one_section_array,
   request
 }

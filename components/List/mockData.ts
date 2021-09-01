@@ -8,7 +8,7 @@
  * 模拟 不等高的 一个section 的 数据源
  * @type {string[]}
  */
-export default   [
+export const one_section_array = [
   // 第一页
   ['https://images.unsplash.com/photo-1624916888351-a18f955a1b93?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyNzQ0NTE1Nw&ixlib=rb-1.2.1&q=80&w=300',
     'https://images.unsplash.com/photo-1626743702655-543c7789cd4d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyNzQ0NTI4MQ&ixlib=rb-1.2.1&q=80&w=300',
@@ -50,4 +50,3 @@ export default   [
     'https://images.unsplash.com/photo-1626103989191-05f5e081e0bf?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyNzQ1NDM1Ng&ixlib=rb-1.2.1&q=80&w=300',
     'https://images.unsplash.com/photo-1626705106454-e87b87e7c1b2?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyNzQ1NDM2Mg&ixlib=rb-1.2.1&q=80&w=300']
 ]
-

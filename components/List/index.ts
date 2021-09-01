@@ -1,6 +1,6 @@
-import List from './List.js'
-import mockData from './mockData'
+import List from './List'
+import { one_section_array } from './mockData'
 
 export {
-  List, mockData
+  List, one_section_array
 }

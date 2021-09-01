@@ -4,9 +4,29 @@ import PropTypes from 'prop-types'
 import MyStyleSheet from '../../styles/MyStyleSheet'
 import objTools from '../../tools/objTools'
 import tool from '../../tools/tool'
-import { LargeList } from 'react-native-largelist'
+import { LargeList, LargeListDataType, IndexPath } from 'react-native-largelist'
 import { ChineseWithLastDateHeader, ChineseWithLastDateFooter } from 'react-native-spring-scrollview/Customize'
+import { Offset } from 'react-native-spring-scrollview'
 
+interface onRefreshProps { page: number }
+interface sectionDataProps{ items: any[] }
+interface renderIndexPathProps {
+  section: number;
+  row: number;
+  mediaWrapperParam:any,
+    rowData:any
+}
+type dataType=LargeListDataType
+const initData:dataType = []
+
+export interface Props {
+  onRefresh:(props:onRefreshProps)=> Promise<any>,
+    onLoading:(props:onRefreshProps)=> Promise<any>,
+    heightForSection?:(section: number) =>number,
+    renderSection?:(section:number)=>React.ReactElement<any>,
+    heightForIndexPath:(indexPath:IndexPath)=> number,
+    renderIndexPath:(indexPath: renderIndexPathProps) => React.ReactElement<any>
+}
 /**
  * eg:
  * <List ref={refList} onRefresh={({ page }) => {
@@ -25,15 +45,15 @@ import { ChineseWithLastDateHeader, ChineseWithLastDateFooter } from 'react-nati
  * @returns {*}
  * @constructor
  */
-const List = (props, parentRef) => {
-  const { onRefresh, onLoading, heightForSection, renderSection, heightForIndexPath, renderIndexPath } = props
+const List :React.FC<Props> = (Props, parentRef) => {
+  const { onRefresh, onLoading, heightForSection, renderSection, heightForIndexPath, renderIndexPath } = Props
   const refLargeList = useRef(null)
   /**
    *  数组里每个{}代表一页数据,eg:[ {items:[]} ]
    */
-  const [data, setData] = useState([])
+  const [data, setData] = useState(initData)
   const [allLoaded, setAllLoaded] = useState(false)
-  const ref_page = useRef(1)// 当前页数
+  const refPage = useRef(1)// 当前页数
 
   const _renderSection = useCallback((section) => {
     if (renderSection) {
@@ -47,7 +67,7 @@ const List = (props, parentRef) => {
       if (renderIndexPath) {
         console.log('List.js _renderIndexPath data=', data)
         console.log('List.js _renderIndexPath section=', section, ' row=', row)
-        const sectionData = data[section]
+        const sectionData:sectionDataProps = data[section]
         // console.log('List.js _renderIndexPath sectionData=', sectionData)
         const items = sectionData.items
         // console.log('List.js _renderIndexPath items=', items)
@@ -61,49 +81,52 @@ const List = (props, parentRef) => {
     },
     [data]
   )
-  const _renderHeaderBackground = useCallback(
-    () => {
-      return <ImageBackground style={{ flex: 1 }} source={''} />
-    },
-    []
-  )
-  const _renderHeader = useCallback(
-    () => {
-      return (
-        <TouchableOpacity onPress={() => console.log('_renderHeader')}>
-          <Text style={styles.header}>I am header</Text>
-        </TouchableOpacity>
-      )
-    },
-    []
-  )
-  const _renderFooter = useCallback(
-    () => {
-      return (
-        <TouchableOpacity onPress={() => console.log('_renderFooter')}>
-          <Text style={styles.header}>I am Footer</Text>
-        </TouchableOpacity>
-      )
-    },
-    []
-  )
+  // const _renderHeaderBackground = useCallback(
+  //   () => {
+  //     return <ImageBackground style={{ flex: 1 }} source={''} />
+  //   },
+  //   []
+  // )
+  // const _renderHeader = useCallback(
+  //   () => {
+  //     return (
+  //       <TouchableOpacity onPress={() => console.log('_renderHeader')}>
+  //         <Text style={styles.header}>I am header</Text>
+  //       </TouchableOpacity>
+  //     )
+  //   },
+  //   []
+  // )
+  // const _renderFooter = useCallback(
+  //   () => {
+  //     return (
+  //       <TouchableOpacity onPress={() => console.log('_renderFooter')}>
+  //         <Text style={styles.header}>I am Footer</Text>
+  //       </TouchableOpacity>
+  //     )
+  //   },
+  //   []
+  // )
   const scrollTo = useCallback(
     ({ x, y }) => {
-      refLargeList.current.scrollTo({ x, y }, true).then().catch()
+      // @ts-ignore
+      refLargeList?.current.scrollTo({ x, y }, true).then().catch()
     },
     [refLargeList]
   )
   const scrollToIndexPath = useCallback(
     ({ section, row }, animated) => {
-      refLargeList.current.scrollToIndexPath({ section, row }, animated).then().catch()
+      // @ts-ignore
+      refLargeList?.current.scrollToIndexPath({ section, row }, animated).then().catch()
     },
     [refLargeList]
   )
   const resetoNoData = useCallback(
     () => {
       console.log('List.js resetoNoData')
-      refLargeList.current.endRefresh()// 完成数据请求以后结束动画
-      ref_page.current = 1
+      // @ts-ignore
+      refLargeList?.current.endRefresh()// 完成数据请求以后结束动画
+      refPage.current = 1
       setData([])
       setAllLoaded(true)
     },
@@ -116,8 +139,9 @@ const List = (props, parentRef) => {
         const [err, newArr] = await tool.to(onRefresh({ page: 1 }))
         console.log('List.js onRefresh await newArr=', newArr, ' err=', err)
         if (newArr) { // {items:[]}
-          refLargeList.current.endRefresh()// 完成数据请求以后结束动画
-          ref_page.current = 1
+          // @ts-ignore
+          refLargeList?.current.endRefresh()// 完成数据请求以后结束动画
+          refPage.current = 1
           setData([{ items: newArr }])
           setAllLoaded(false)
         } else {
@@ -134,22 +158,26 @@ const List = (props, parentRef) => {
     async () => {
       console.log('List.js _onLoading onLoading=', onLoading)
       if (onLoading) {
-        const [err, newArr] = await tool.to(onLoading({ page: ref_page.current + 1 }))
+        const [err, newArr] = await tool.to(onLoading({ page: refPage.current + 1 }))
         console.log('List.js onLoading await newArr=', newArr, ' err=', err)
         if (newArr) {
-          refLargeList.current.endLoading()
-          ref_page.current += 1
-          const newData = [].concat(data)
+          // @ts-ignore
+          refLargeList?.current.endLoading()
+          refPage.current += 1
+          // @ts-ignore
+          const newData:LargeListDataType = [].concat(data)
           newData.push({ items: newArr })
           console.log('List.js _onLoading 列表新的数据源=', newData)
           setData(newData)
         } else { // 没有新数据
           console.log('List.js _onLoading 没有新数据')
-          refLargeList.current.endLoading()
+          // @ts-ignore
+          refLargeList?.current.endLoading()
           setAllLoaded(true)
         }
       } else {
-        refLargeList.current.endLoading()
+        // @ts-ignore
+        refLargeList?.current.endLoading()
         setAllLoaded(true)
       }
     },
@@ -184,7 +212,8 @@ const List = (props, parentRef) => {
     () => {
       // todo
       console.log('List componentDidMount')
-      refLargeList.current.beginRefresh()
+      // @ts-ignore
+      refLargeList?.current.beginRefresh()
 
       // componentWillUnmount
       return () => {
@@ -198,21 +227,22 @@ const List = (props, parentRef) => {
   useImperativeHandle(parentRef, () => ({
     beginRefresh: () => {
       console.log('List.js beginRefresh')
-      refLargeList.current.beginRefresh()
+      // @ts-ignore
+      refLargeList?.current.beginRefresh()
     },
     /**
      * 使用代码滑动到指定位置
      * @param x
      * @param y
      */
-    scrollTo: ({ x, y }) => {
+    scrollTo: ({ x, y }:Offset) => {
       console.log('List.js scrollTo x=', x, ' y=', y)
       scrollTo({ x, y })
     },
     /**
      * 用代码滑动到指定的偏移(IndexPath),如果row===-1，则表示滑动到相应的组头
      */
-    scrollToIndexPath: ({ section, row }, animated = true) => {
+    scrollToIndexPath: ({ section, row }:IndexPath, animated = true) => {
       console.log('List.js scrollToIndexPath section=', section, ' row=', row)
       scrollToIndexPath({ section, row }, animated)
     }
@@ -228,6 +258,7 @@ const List = (props, parentRef) => {
   // render
   console.log('List.js render data=', data)
   // https://bolan9999.github.io/react-native-largelist/#/zh-cn/V3/SupportedProps
+  // @ts-ignore
   return (
     <LargeList
       ref={ref => {
@@ -306,17 +337,18 @@ const List = (props, parentRef) => {
     />
   )
 }
-List.propTypes = {
-  onRefresh: PropTypes.func,
-  onLoading: PropTypes.func,
-  heightForSection: PropTypes.func,
-  renderSection: PropTypes.func,
-  heightForIndexPath: PropTypes.func.isRequired,
-  renderIndexPath: PropTypes.func.isRequired
-}
-List.defaultProps = {
-}
+// List.propTypes = {
+//   onRefresh: PropTypes.func,
+//   onLoading: PropTypes.func,
+//   heightForSection: PropTypes.func,
+//   renderSection: PropTypes.func,
+//   heightForIndexPath: PropTypes.func.isRequired,
+//   renderIndexPath: PropTypes.func.isRequired
+// }
+// List.defaultProps = {
+// }
 
+// @ts-ignore
 const styles = MyStyleSheet.create({
   container: {
     flex: 1, width: '100%'
@@ -340,4 +372,5 @@ const styles = MyStyleSheet.create({
 
 })
 
+// @ts-ignore
 export default memo(forwardRef(List))
