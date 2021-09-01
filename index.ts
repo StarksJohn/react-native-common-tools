@@ -55,6 +55,10 @@ import MyStyleSheet from './styles/MyStyleSheet'
 import { List, one_section_array } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
 import * as request from './api/request'
+import { modelProps as _modelProps } from './dva/modelProps'
+
+export interface modelProps extends _modelProps{
+}
 
 export {
   // baseTimer,
