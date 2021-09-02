@@ -9,7 +9,8 @@ import { modelProps } from './modelProps'
 export default function (modelList:modelProps[]) {
   const modelContainer = {}
 
-  _.forEach(modelList, (it: { namespace: string; attributesToBeCached: [] }) => {
+  // @ts-ignore
+  _.forEach(modelList, (it: { namespace: string; attributesToBeCached: string[] }) => {
     console.log('models.ts forEach it=', it)
 
     const namespace = _.isString(it) ? it : it.namespace

@@ -1,12 +1,11 @@
 import { create } from 'dva-core'
-import { modelProps } from './modelProps'
 
 let app: { model: (arg0: any) => any; use: (arg0: { onError(err: any): void }) => void; start: () => void; _store: any; getStore: { (): { (): any; new(): any; getState: { (): any; new(): any } }; dispatch: any; }; dispatch: (arg0: any) => any }
 let store: { dispatch: any }
 let dispatch
 let registered: boolean
 
-function createApp (opt: { models: modelProps[], enableLog:boolean }) {
+function createApp (opt: { models: any[], enableLog:boolean }) {
   // redux 的日志
   // if (opt.enableLog) {
   //   opt.onAction = [createLogger()]
