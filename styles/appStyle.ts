@@ -78,7 +78,7 @@ const _style = {
     ip11 : {left: 0, top: 48, right: 0, bottom: 34}
     ip8: {left: 0, top: 20, right: 0, bottom: 0}
    */
-  safeAreaInsets: null, // 不同设备安全区域相对物理屏幕的内边距,由具体项目的 react-native-safe-area-context 库的 useSafeAreaInsets 获取
+  safeAreaInsets, // 不同设备安全区域相对物理屏幕的内边距,由具体项目的 react-native-safe-area-context 库的 useSafeAreaInsets 获取
   isIphoneX: isIphoneX(),
   ifIphoneX,
   // the height of the bottom to fit the safe area: 34 for iPhone X and 0 for other devices.
