@@ -4,8 +4,9 @@
  */
 import _ from 'lodash'
 import modelTools from './modelTools'
+import { modelProps } from './modelProps'
 
-export default function (modelList = []) {
+export default function (modelList:modelProps[]) {
   const modelContainer = {}
 
   _.forEach(modelList, (it: { namespace: string; attributesToBeCached: [] }) => {

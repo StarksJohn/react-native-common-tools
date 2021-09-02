@@ -1,17 +1,15 @@
 /* eslint-disable consistent-return */
 import _ from 'lodash'
 import objTools from '../tools/objTools'
-import tool,{cacheAnAttributeOfInitStateProps} from '../tools/tool'
+import tool, { cacheAnAttributeOfInitStateProps } from '../tools/tool'
 import asyncStorage from '../tools/asyncStorage'
 import baseModel from './baseModel'
-
-
 
 /**
  * 缓存 initState 的某个属性,如果这个属性再 attributesToBeCached 里注册了的话
  * @param key
  */
-const cacheAnAttributeOfInitState = async ({key,value,attributesToBeCached}:cacheAnAttributeOfInitStateProps) => {
+const cacheAnAttributeOfInitState = async ({ key, value, attributesToBeCached }:cacheAnAttributeOfInitStateProps) => {
   const index = _.indexOf(attributesToBeCached, key)
   if (index !== -1) {
     console.log('modelTools.js 开始缓存 initState.', key, ' 的值=', value)
@@ -22,7 +20,7 @@ const cacheAnAttributeOfInitState = async ({key,value,attributesToBeCached}:cach
   }
 }
 
-interface createDefaultProps { namespace:string, attributesToBeCached :[] }
+interface createDefaultProps { namespace:string, attributesToBeCached :string[] }
 interface saveSomeThingParams1 {
   action:string, payload: {}, callback():void
 }
@@ -39,7 +37,7 @@ interface putParams {
  * @param namespace : 不能改为 nameSpace,因 Model 里定义的 就是 namespace
  * @returns {{effects: {}, namespace: *, reducers: {clear(): {}, save(*=, {payload: *}): *, saveSomeThing(*, {payload: *}): *}, state: {}}}
  */
-const createDefault = ({namespace,attributesToBeCached}:createDefaultProps) => {
+const createDefault = ({ namespace, attributesToBeCached }:createDefaultProps) => {
   return {
     namespace,
     state: {},
@@ -47,16 +45,16 @@ const createDefault = ({namespace,attributesToBeCached}:createDefaultProps) => {
       // modelTools.js 里的 每个 effects 都会注入到每个 Model 里
       // 通用的 具体控件发起的 effect,把 payload 发给对应的 reducer, 并且如果 action 在 attributesToBeCached 里注册过,就缓存 action 对应的 数据
       * [baseModel.baseEffects.saveSomeThing] (
-          { action, payload, callback }:saveSomeThingParams1,
-          { put, call, select }:saveSomeThingParams2
+        { action, payload, callback }:saveSomeThingParams1,
+        { put, call, select }:saveSomeThingParams2
       ) {
         console.log(
-            'modelTools.js effects saveSomeThing \n namespace=',
-            namespace,
-            '\n payload=',
-            payload,
-            '\n action=',
-            action, ' \n callback=', callback
+          'modelTools.js effects saveSomeThing \n namespace=',
+          namespace,
+          '\n payload=',
+          payload,
+          '\n action=',
+          action, ' \n callback=', callback
         )
         // const state = yield select((state) => state) //这里就获取到了当前state
         // console.log('testModel.js effects  全局state=', state)
@@ -83,7 +81,7 @@ const createDefault = ({namespace,attributesToBeCached}:createDefaultProps) => {
       clear () {
         return {}
       },
-      [baseModel.baseAction.saveSomeThing] (state: object, {payload}: any) {
+      [baseModel.baseAction.saveSomeThing] (state: object, { payload }: any) {
         // console.log("modelTools.js reducers saveSomeThing state=", state);
         // console.log("modelTools.js reducers saveSomeThing payload=", payload);
         const newState = {
@@ -91,14 +89,14 @@ const createDefault = ({namespace,attributesToBeCached}:createDefaultProps) => {
           ...payload
         }
         console.log(
-            'modelTools.js reducers saveSomeThing \n namespace=',
-            namespace,
-            ' \n state=',
-            state,
-            '\n payload=',
-            payload,
-            '\n newState=',
-            newState
+          'modelTools.js reducers saveSomeThing \n namespace=',
+          namespace,
+          ' \n state=',
+          state,
+          '\n payload=',
+          payload,
+          '\n newState=',
+          newState
         )
 
         return newState
@@ -118,8 +116,8 @@ const createDefault = ({namespace,attributesToBeCached}:createDefaultProps) => {
       initCache: (params: { dispatch: any; history: any }) => {
         const { dispatch, history } = params
         console.log(
-            'modelTools.js subscriptions initCache attributesToBeCached=',
-            attributesToBeCached
+          'modelTools.js subscriptions initCache attributesToBeCached=',
+          attributesToBeCached
         )
         // @ts-ignore
         return baseModel.baseSubscriptions.initCache({
