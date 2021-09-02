@@ -1,3 +1,10 @@
+import { RouteProp, NavigationState } from '@react-navigation/core'
+import { ParamListBase } from '@react-navigation/native'
+
+export interface _RouteProps extends RouteProp<ParamListBase, string>{
+  state:NavigationState
+}
+
 export default {
   navigate: (navigation: { navigate: (arg0: any, arg1: any) => void; }, routeName: string, params: object| { }) => {
     console.log('routes.ts navigate routeName=', routeName, ' params=', params)

@@ -50,7 +50,7 @@ import models from './dva/models'
 //   ResetStyle
 // } from 'react-native-easy-app'
 import ahooks from './tools/ahooks'
-import routes from './routes/index'
+import routes, { _RouteProps } from './routes/index'
 import MyStyleSheet from './styles/MyStyleSheet'
 import { List, one_section_array } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
@@ -59,6 +59,9 @@ import { modelProps as _modelProps } from './dva/modelProps'
 
 export interface modelProps extends _modelProps{
 }
+
+export interface RouteProps extends _RouteProps{
+};
 
 export {
   // baseTimer,

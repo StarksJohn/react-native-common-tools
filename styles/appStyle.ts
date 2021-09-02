@@ -4,6 +4,7 @@ import React, { StyleSheet, Dimensions, PixelRatio, Platform, StatusBar, Image }
 import { ifIphoneX } from '../tools/screenTools'
 import { isIphoneX, getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper'
 import MyStyleSheet from './MyStyleSheet'
+import { SafeAreaViewProps } from 'react-native-safe-area-context'
 
 const myStyleSheet = MyStyleSheet.create({
   pagePaddingHorizontal: {
@@ -20,6 +21,8 @@ const pageCellW = screenWidth - pagePaddingHorizontal * 2
 const navBarH = (Platform.OS === 'ios' ? 44 : 56)
 const blackText = '#212121'
 const white = '#fff'
+
+let safeAreaInsets:SafeAreaViewProps['initialSafeAreaInsets']
 
 const _style = {
   screenWidth,
