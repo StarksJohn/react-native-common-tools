@@ -1,6 +1,6 @@
 export interface modelProps {
     namespace:string,
     state:object,
-    attributesToBeCached:[string],
-    [propName: string]: any;// 任意属性
+    attributesToBeCached?:string[], // Array of string type
+    [propName: string]: any;// Arbitrary attribute
 }

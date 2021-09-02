@@ -1,5 +1,5 @@
 export default {
-  navigate: (navigation: { navigate: (arg0: any, arg1: any) => void; }, routeName: string, params: object) => {
+  navigate: (navigation: { navigate: (arg0: any, arg1: any) => void; }, routeName: string, params: object| { }) => {
     console.log('routes.ts navigate routeName=', routeName, ' params=', params)
     navigation.navigate(routeName, params)
   },
