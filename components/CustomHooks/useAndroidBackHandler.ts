@@ -1,8 +1,10 @@
-import React, { useEffect, useCallback,   } from 'react'
-import {  BackHandler, } from 'react-native'
+import React, { useEffect, useCallback } from 'react'
+import { BackHandler } from 'react-native'
+import { NavigationProp } from '@react-navigation/core'
 
 /**
  * 监听设备上的后退按钮事件,可以调用你自己的函数来处理后退行为
+ * 避免安卓用户在一级页面时按后退按键后直接退出app
  * 具体页面如果想在用户按下后退按钮后不退出自己页面,则可以使用此自定义hooks,传 handleBackPress 方法 进来
  * Added to the page component, used to exit the current page after clicking the return button of the device on Android
  * If a keyboard pops up in the page, after clicking the return button of Android device, the keyboard will be folded up first, and then it will exit the page
@@ -14,9 +16,9 @@ import {  BackHandler, } from 'react-native'
  * @returns {*}
  * @constructor
  */
-let lastClickTime = (new Date()).valueOf();
-export default function useAndroidBackHandler (props: { navigation: any; handleBackPress: any; }) {
-  const { navigation, handleBackPress/*此方法在外部定义时也要 return true,才能 拦截具体页面的 退出事件*/ } = props
+let lastClickTime = (new Date()).valueOf()
+export default function useAndroidBackHandler (props: { navigation: NavigationProp<any>; handleBackPress?: Function; }) {
+  const { navigation, handleBackPress/* 此方法在外部定义时也要 return true,才能 拦截具体页面的 退出事件 */ } = props
 
   const _handleBackPress = useCallback(() => {
     console.log('useAndroidBackHandler handleBackPress')
@@ -37,42 +39,41 @@ export default function useAndroidBackHandler (props: { navigation: any; handleB
        * If you can return to the previous page, do not block
        */
       if (navigation.canGoBack()) {
-        return false;
+        return false
       } else {
-        let nowTime = (new Date()).valueOf();
+        const nowTime = (new Date()).valueOf()
         /**
          * 2次按下 后退按钮的间隔时间小于1秒才能退出app
          * The interval between pressing the back button twice is less than 1 second to exit the app
          */
         if (nowTime - lastClickTime < 1000) {
-          console.log('useAndroidBackHandler 退出 app');
-          BackHandler.exitApp();
+          console.log('useAndroidBackHandler 退出 app')
+          BackHandler.exitApp()
         } else {
-          console.log('useAndroidBackHandler 再按一次，退出 app');
-          lastClickTime = nowTime;
+          console.log('useAndroidBackHandler 再按一次，退出 app')
+          lastClickTime = nowTime
         }
-        return true;
+        return true
       }
     }
-    return false //返回false 时不会阻止事件冒泡传递，因而会执行默认的后退行为 https://reactnative.cn/docs/backhandler
+    return false // 返回false 时不会阻止事件冒泡传递，因而会执行默认的后退行为 https://reactnative.cn/docs/backhandler
   }, [handleBackPress])
 
   /**
    * componentDidMount && componentWillUnmount
    */
   useEffect(
-    /*The async keyword cannot be added to the first parameter https://juejin.im/post/6844903985338400782#heading-27 */
+    /* The async keyword cannot be added to the first parameter https://juejin.im/post/6844903985338400782#heading-27 */
     () => {
       console.log('useAndroidBackHandler componentDidMount')
 
-      //todo
+      // todo
       BackHandler.addEventListener('hardwareBackPress', _handleBackPress)
 
-      //componentWillUnmount
+      // componentWillUnmount
       return () => {
         console.log('useAndroidBackHandler componentWillUnmount')
         BackHandler.removeEventListener('hardwareBackPress', _handleBackPress)
       }
     }, [])
 }
-
