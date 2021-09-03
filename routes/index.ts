@@ -10,7 +10,7 @@ export default {
     console.log('routes.ts navigate routeName=', routeName, ' params=', params)
     navigation.navigate(routeName, params)
   },
-  push: (navigation: any[], routeName: string, params: object) => {
+  push: (navigation: any, routeName: string, params: object) => {
     console.log('routes.js push routeName=', routeName, ' params=', params)
     navigation.push(routeName, params)
   },
