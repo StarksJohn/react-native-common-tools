@@ -8,5 +8,55 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="@types/navigation" level="application" />
+    <orderEntry type="library" name="@types/node" level="application" />
+    <orderEntry type="library" name="@types/prop-types" level="application" />
+    <orderEntry type="library" name="@types/react-app" level="application" />
+    <orderEntry type="library" name="@types/react-bootstrap" level="application" />
+    <orderEntry type="library" name="@types/react-document-title" level="application" />
+    <orderEntry type="library" name="@types/react-input-mask" level="application" />
+    <orderEntry type="library" name="@types/react-instantsearch-native" level="application" />
+    <orderEntry type="library" name="@types/react-native" level="application" />
+    <orderEntry type="library" name="@types/react-native-autocomplete-input" level="application" />
+    <orderEntry type="library" name="@types/react-native-collapsible" level="application" />
+    <orderEntry type="library" name="@types/react-native-communications" level="application" />
+    <orderEntry type="library" name="@types/react-native-datepicker" level="application" />
+    <orderEntry type="library" name="@types/react-native-doc-viewer" level="application" />
+    <orderEntry type="library" name="@types/react-native-document-picker" level="application" />
+    <orderEntry type="library" name="@types/react-native-drawer" level="application" />
+    <orderEntry type="library" name="@types/react-native-drawer-layout" level="application" />
+    <orderEntry type="library" name="@types/react-native-fabric" level="application" />
+    <orderEntry type="library" name="@types/react-native-fbsdk" level="application" />
+    <orderEntry type="library" name="@types/react-native-fetch-blob" level="application" />
+    <orderEntry type="library" name="@types/react-native-fs" level="application" />
+    <orderEntry type="library" name="@types/react-native-google-signin" level="application" />
+    <orderEntry type="library" name="@types/react-native-keep-awake" level="application" />
+    <orderEntry type="library" name="@types/react-native-linear-gradient" level="application" />
+    <orderEntry type="library" name="@types/react-native-material-design-searchbar" level="application" />
+    <orderEntry type="library" name="@types/react-native-material-kit" level="application" />
+    <orderEntry type="library" name="@types/react-native-material-ui" level="application" />
+    <orderEntry type="library" name="@types/react-native-mixpanel" level="application" />
+    <orderEntry type="library" name="@types/react-native-orientation" level="application" />
+    <orderEntry type="library" name="@types/react-native-popup-dialog" level="application" />
+    <orderEntry type="library" name="@types/react-native-push-notification" level="application" />
+    <orderEntry type="library" name="@types/react-native-qrcode" level="application" />
+    <orderEntry type="library" name="@types/react-native-safari-view" level="application" />
+    <orderEntry type="library" name="@types/react-native-scrollable-tab-view" level="application" />
+    <orderEntry type="library" name="@types/react-native-sensor-manager" level="application" />
+    <orderEntry type="library" name="@types/react-native-snap-carousel" level="application" />
+    <orderEntry type="library" name="@types/react-native-sortable-grid" level="application" />
+    <orderEntry type="library" name="@types/react-native-sortable-list" level="application" />
+    <orderEntry type="library" name="@types/react-native-svg-uri" level="application" />
+    <orderEntry type="library" name="@types/react-native-swiper" level="application" />
+    <orderEntry type="library" name="@types/react-native-tab-navigator" level="application" />
+    <orderEntry type="library" name="@types/react-native-tab-view" level="application" />
+    <orderEntry type="library" name="@types/react-native-touch-id" level="application" />
+    <orderEntry type="library" name="@types/react-native-vector-icons" level="application" />
+    <orderEntry type="library" name="@types/react-native-video" level="application" />
+    <orderEntry type="library" name="@types/react-navigation" level="application" />
+    <orderEntry type="library" name="@types/stylus" level="application" />
+    <orderEntry type="library" name="axios" level="application" />
+    <orderEntry type="library" name="vue" level="application" />
+    <orderEntry type="library" name="vue-resource" level="application" />
   </component>
 </module>
