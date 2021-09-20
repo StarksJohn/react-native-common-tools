@@ -6,7 +6,7 @@ import { modelProps } from './modelProps'
  * 初始化dva 模块
  */
 export default (modelList:modelProps[]) => {
-  dva.createApp({
+  return dva.createApp({
     models: models(modelList),
     enableLog: false
   })
