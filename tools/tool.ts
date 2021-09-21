@@ -1,5 +1,6 @@
 import { Platform } from 'react-native'
 import asyncStorage from './asyncStorage'
+// @ts-ignore
 import _ from 'lodash'
 import dva from '../dva/dva'
 
@@ -34,6 +35,7 @@ export default {
    * @returns {*}
    */
   uri: (imgUrl = '') => {
+    // @ts-ignore
     if (Platform.OS === 'ios' && imgUrl.startsWith('http:')) {
       imgUrl = imgUrl.replace(/http/, 'https')
     }
@@ -97,8 +99,6 @@ export default {
     return false
   },
 
-
-
   /**
    * 缓存 initState 的某个属性,如果这个属性再 attributesToBeCached 里注册了的话
    * @param key
@@ -116,7 +116,12 @@ export default {
    * 在 Component 外 的任何地方 发 dispatch
    * @param p
    */
-  dispatchAnyWhere: p => {
+  dispatchAnyWhere: (p: {
+    type: string, // effect: string
+    action: string,
+    payload: object,
+    callback?: Function,
+  }) => {
     return dva.getDispatch(p)
   },
   getStore: () => {
