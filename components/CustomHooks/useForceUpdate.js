@@ -3,12 +3,11 @@ import { Image, View, SafeAreaView, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import appStyle from '../../styles/appStyle'
 
-
 useForceUpdate.propTypes = {}
 
 useForceUpdate.defaultProps = {}
 
-let initialState = 0
+const initialState = 0
 
 /**
  * PureComponent
@@ -31,14 +30,14 @@ function useForceUpdate (props) {
    * componentDidMount && componentWillUnmount
    */
   useEffect(
-    /*The async keyword cannot be added to the first parameter https://juejin.im/post/6844903985338400782#heading-27 */
+    /* The async keyword cannot be added to the first parameter https://juejin.im/post/6844903985338400782#heading-27 */
     () => {
-      //todo
-      console.log(`useForceUpdate.js componentDidMount`)
+      // todo
+      console.log('useForceUpdate.js componentDidMount')
 
-      //componentWillUnmount
+      // componentWillUnmount
       return () => {
-        console.log(`useForceUpdate.js componentWillUnmount`)
+        console.log('useForceUpdate.js componentWillUnmount')
       }
     }, [])
 
@@ -46,10 +45,10 @@ function useForceUpdate (props) {
   componentDidUpdate
   */
   useEffect(() => {
-    console.log(`useForceUpdate.js componentDidUpdate curState=`, curState)
+    console.log('useForceUpdate.js componentDidUpdate curState=', curState)
   }, [curState])
 
-  //render
+  // render
   console.log('useForceUpdate render curState=', curState)
   return forceUpdateDispatch
 }

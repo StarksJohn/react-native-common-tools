@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import objTools from '../tools/objTools'
-import tool from '../tools/tool'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+
 import asyncStorage from '../tools/asyncStorage'
 
 interface initCacheProps {
@@ -36,7 +36,7 @@ export default {
   baseSubscriptions: {
     // 初始化缓存
     initCache: (props: initCacheProps) => {
-      const {namespace,attributesToBeCached,dispatch}=props
+      const { namespace, attributesToBeCached, dispatch } = props
       console.log(
         'baseModel.js subscriptions initCache namespace=',
         namespace,

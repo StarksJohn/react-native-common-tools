@@ -1,17 +1,17 @@
-import React, { Component, } from 'react'
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text, SectionList,
   View, Platform,
   TouchableOpacity,
   ActivityIndicator, RefreshControl, Image
-} from 'react-native'   //引入js文件
+} from 'react-native' // 引入js文件
 import PropTypes from 'prop-types'
 import ViewPropTypes from './ViewPropTypes'
 import * as _ from 'lodash'
 import PureComponent from './PureComponent'
 import constant from '../constant/constant'
-import tool from '../tools/tool'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
 
 const _refreshControlStyle = {
   // backgroundColor: '#F5F5F5',
@@ -25,16 +25,16 @@ export const RefreshState = {
   Idle: 0,
   HeaderRefreshing: 1,
   FooterRefreshing: 2,
-  NoMoreData: 3,//没有更多
-  FooterFailure: 4,//加载更多失败，不是 没数据，而是 接口没通，可能是 网络等其他原因
-  EmptyData: 5,//完全无数据
+  NoMoreData: 3, // 没有更多
+  FooterFailure: 4, // 加载更多失败，不是 没数据，而是 接口没通，可能是 网络等其他原因
+  EmptyData: 5// 完全无数据
 }
 
 export default class BaseSectionList extends PureComponent {
   // 定义props类型
   static propTypes = {
     renderListHeaderComponent: PropTypes.func,
-    name: PropTypes.string,/*组件名字*/
+    name: PropTypes.string, /* 组件名字 */
     refreshControlStyle: PropTypes.object,
     style: ViewPropTypes.style,
     renderSectionHeader: PropTypes.func,
@@ -55,18 +55,18 @@ export default class BaseSectionList extends PureComponent {
     footerFailureComponent: PropTypes.element,
     footerNoMoreDataComponent: PropTypes.element,
     footerEmptyDataComponent: PropTypes.element,
-    showScrollToTop: PropTypes.bool,/*右下角是否显示 向上箭头，点击后 列表直接 滚动到  顶部*/
+    showScrollToTop: PropTypes.bool, /* 右下角是否显示 向上箭头，点击后 列表直接 滚动到  顶部 */
     renderEmptyList: PropTypes.func,
     keyExtractor: PropTypes.func,
     initialNumToRender: PropTypes.number,
     getItemLayout: PropTypes.func,
     viewOffset: PropTypes.number,
-    registTabBarOnTwiceClickEvent: PropTypes.bool,//是否注册 底部tabbar  双击 事件
-    hasAdsCell: PropTypes.bool,//列表第二页开始是否每页都有个 广告cell
+    registTabBarOnTwiceClickEvent: PropTypes.bool, // 是否注册 底部tabbar  双击 事件
+    hasAdsCell: PropTypes.bool// 列表第二页开始是否每页都有个 广告cell
   }
 
   static defaultProps = {
-    needRefresh: true,//是否需 要下拉刷新功能
+    needRefresh: true, // 是否需 要下拉刷新功能
     renderListHeaderComponent: (listHeaderData) => {
       return null
     },
@@ -98,29 +98,32 @@ export default class BaseSectionList extends PureComponent {
     showScrollToTop: true,
     renderEmptyList: null,
     keyExtractor: (item, index) => {
-      return index  //外部要 重写此方法，返回 每个item的 唯一标示，才能优化 列表性能
+      return index // 外部要 重写此方法，返回 每个item的 唯一标示，才能优化 列表性能
     },
     initialNumToRender: constant.listPageSize,
     getItemLayout: () => {
       return null
-    }, viewOffset: 0, registTabBarOnTwiceClickEvent: false, hasAdsCell: false,
+    },
+    viewOffset: 0,
+    registTabBarOnTwiceClickEvent: false,
+    hasAdsCell: false
   }
 
-  constructor (props) { //构造器
+  constructor (props) { // 构造器
     super(props)
     this.state = {
       loadedAll: false,
-      listHeight: 0,//为了 ListEmptyComponent
+      listHeight: 0, // 为了 ListEmptyComponent
       page: 1,
       sections: props.sections,
       listState: RefreshState.Idle,
       listHeaderData: null,
       registTabBarOnTwiceClickEvent: props.registTabBarOnTwiceClickEvent
     }
-    this.loadMoreDataThrottled = _.throttle(this.loadMore, 500)//真机安卓测试后没发现 自动回调2次  onEndReached 的现象，模拟器经常出现
+    this.loadMoreDataThrottled = _.throttle(this.loadMore, 500)// 真机安卓测试后没发现 自动回调2次  onEndReached 的现象，模拟器经常出现
     this.showScrollTopBt = false
-    this.onFocusTimeStamp = 0//获取焦点的时间戳
-    this.onBlurTimeStamp = 0//取消焦点的时间戳
+    this.onFocusTimeStamp = 0// 获取焦点的时间戳
+    this.onBlurTimeStamp = 0// 取消焦点的时间戳
 
     this.renderSectionListHeader = this.renderSectionListHeader.bind(this)
     this._renderItem = this._renderItem.bind(this)
@@ -193,7 +196,6 @@ export default class BaseSectionList extends PureComponent {
 
   scrollEnabled (b) {
     this.SectionListR.setNativeProps({ scrollEnabled: b })
-
   }
 
   shouldStartHeaderRefreshing () {
@@ -246,7 +248,7 @@ export default class BaseSectionList extends PureComponent {
   //   }
   // }
 
-  /*刷新*/
+  /* 刷新 */
   refresh () {
     if (!this.props.needRefresh) {
       console.log('SectionList.js ', this.props.name, ' 的 needRefresh ')
@@ -257,12 +259,13 @@ export default class BaseSectionList extends PureComponent {
       console.log('\n SectionList 准备获取', this.props.name, ' 列表的 第 ', 1, '页数据')
 
       if (Platform.OS === 'ios') {
-        this.SectionListR && this.SectionListR.setNativeProps({ contentOffset: { x: 0, y: 0 } })//安卓没效果
+        this.SectionListR && this.SectionListR.setNativeProps({ contentOffset: { x: 0, y: 0 } })// 安卓没效果
       } else {
-        //ios 也没效果
-        this.state.sections.length > 0 && this.SectionListR && this.SectionListR.scrollToLocation({ /*viewPosition: 1  viewOffset: 0*/
+        // ios 也没效果
+        this.state.sections.length > 0 && this.SectionListR && this.SectionListR.scrollToLocation({ /* viewPosition: 1  viewOffset: 0 */
           sectionIndex: 0,
-          itemIndex: 0, viewOffset: this.props.viewOffset,//viewPosition:0,
+          itemIndex: 0,
+          viewOffset: this.props.viewOffset// viewPosition:0,
         })
       }
 
@@ -270,26 +273,26 @@ export default class BaseSectionList extends PureComponent {
       this.scrollTopBtR && this.scrollTopBtR.setState({ show: this.showScrollTopBt })
 
       this.setState({
-          page: 1, listState: RefreshState.HeaderRefreshing,
-        }, async () => {
-          console.log('SectionList.js goto this.props.refresh()')
-          const [err, data] = await tool.to(this.props.refresh({ sections: []/*传给具体接口，用于刷新成功后改变其指针,让 数据源重置*/ }))
-          if (data && data.sections.length > 0) {
-            console.log('SectionList 获取 ', this.props.name, ' 列表的 第', this.state.page, '页数据 成功，准备刷新ui，data=', data)
-            this.setState({
-              sections: data.sections,
-              loadedAll: data.loadedAll,
-              listState: this.changeListState(data),
-              listHeaderData: data.listHeaderData
-            }, () => {
-            })
-          } else {
-            this.setState({
-              sections: [], listState: RefreshState.EmptyData, loadedAll: false
-            }, () => {
-            })
-          }
+        page: 1, listState: RefreshState.HeaderRefreshing
+      }, async () => {
+        console.log('SectionList.js goto this.props.refresh()')
+        const [err, data] = await tool.to(this.props.refresh({ sections: []/* 传给具体接口，用于刷新成功后改变其指针,让 数据源重置 */ }))
+        if (data && data.sections.length > 0) {
+          console.log('SectionList 获取 ', this.props.name, ' 列表的 第', this.state.page, '页数据 成功，准备刷新ui，data=', data)
+          this.setState({
+            sections: data.sections,
+            loadedAll: data.loadedAll,
+            listState: this.changeListState(data),
+            listHeaderData: data.listHeaderData
+          }, () => {
+          })
+        } else {
+          this.setState({
+            sections: [], listState: RefreshState.EmptyData, loadedAll: false
+          }, () => {
+          })
         }
+      }
       )
     }
   }
@@ -317,14 +320,14 @@ export default class BaseSectionList extends PureComponent {
           } else {
             console.log('SectionList 获取 ', this.props.name, ' 列表的 第', this.state.page, '页数据 失败')
             this.setState({
-              loadedAll: false, page: this.state.page - 1,
+              loadedAll: false,
+              page: this.state.page - 1,
               listState: RefreshState.FooterFailure
             }, () => {
             })
           }
         }
       )
-
     }
   }
 
@@ -348,7 +351,7 @@ export default class BaseSectionList extends PureComponent {
   renderFooter = () => {
     let footer = null
 
-    let {
+    const {
       footerRefreshingText,
       footerFailureText,
       footerNoMoreDataText,
@@ -356,7 +359,7 @@ export default class BaseSectionList extends PureComponent {
       footerRefreshingComponent,
       footerFailureComponent,
       footerNoMoreDataComponent,
-      footerEmptyDataComponent,
+      footerEmptyDataComponent
     } = this.props
 
     // console.log('准备画 renderFooter，state=', this.state)
@@ -376,7 +379,7 @@ export default class BaseSectionList extends PureComponent {
             }
           }}
           >
-            {footerFailureComponent ? footerFailureComponent : (
+            {footerFailureComponent || (
               <View style={styles.footerContainer}>
                 <Text style={styles.footerText}>{footerFailureText}</Text>
               </View>
@@ -391,7 +394,7 @@ export default class BaseSectionList extends PureComponent {
             this.props.refresh && this.props.refresh(RefreshState.HeaderRefreshing)
           }}
           >
-            {footerEmptyDataComponent ? footerEmptyDataComponent : (
+            {footerEmptyDataComponent || (
               <View style={styles.footerContainer}>
                 <Text style={styles.footerText}>{footerEmptyDataText}</Text>
               </View>
@@ -401,7 +404,7 @@ export default class BaseSectionList extends PureComponent {
         break
       }
       case RefreshState.FooterRefreshing: {
-        footer = footerRefreshingComponent ? footerRefreshingComponent : (
+        footer = footerRefreshingComponent || (
           <View style={styles.footerContainer}>
             <ActivityIndicator size="small" color="#888888" />
             <Text style={[styles.footerText, { marginLeft: 7 }]}>{footerRefreshingText}</Text>
@@ -410,7 +413,7 @@ export default class BaseSectionList extends PureComponent {
         break
       }
       case RefreshState.NoMoreData: {
-        footer = footerNoMoreDataComponent ? footerNoMoreDataComponent : (
+        footer = footerNoMoreDataComponent || (
           <View style={styles.footerContainer}>
             <Text style={styles.footerText}>{footerNoMoreDataText}</Text>
           </View>
@@ -474,9 +477,9 @@ export default class BaseSectionList extends PureComponent {
   // }
 
   _renderEmpty () {
-    return (!this.props.hasOwnProperty('renderHeader')) && this.state.listState === RefreshState.Idle && this.props.renderEmptyList ?
-      <View style={{
-        flex: 1,// backgroundColor: gRandomColor(),
+    return (!this.props.hasOwnProperty('renderHeader')) && this.state.listState === RefreshState.Idle && this.props.renderEmptyList
+      ? <View style={{
+        flex: 1, // backgroundColor: gRandomColor(),
         height: this.state.listHeight
       }}>
         {this.props.renderEmptyList(this.refresh)}
@@ -495,8 +498,8 @@ export default class BaseSectionList extends PureComponent {
     console.log('SectionList render listHeaderData', listHeaderData)
 
     const _rest = {}
-    if (!getItemLayout) {//没传 getItemLayout 但传了 cellHeight
-      _rest.getItemLayout = getItemLayout//https://www.jianshu.com/p/38528930b3d1
+    if (!getItemLayout) { // 没传 getItemLayout 但传了 cellHeight
+      _rest.getItemLayout = getItemLayout// https://www.jianshu.com/p/38528930b3d1
     }
     return (
       <SectionList
@@ -508,7 +511,7 @@ export default class BaseSectionList extends PureComponent {
         onLayout={(e) => {
           if (listHeight === 0 && e.nativeEvent.layout.height !== 0) {
             console.log('SectionList 设置 ' + name + ' 列表的 listHeight，马上重绘，e.nativeEvent.layout.height=', e.nativeEvent.layout.height)
-            this.setState({//为了显示 ListEmptyComponent
+            this.setState({ // 为了显示 ListEmptyComponent
               listHeight: e.nativeEvent.layout.height
             })
           }
@@ -529,14 +532,14 @@ export default class BaseSectionList extends PureComponent {
             }}>
           </RefreshControl>
         }
-        renderSectionHeader={this._sectionComp} //区头
-        renderItem={this._renderItem}   //cell
-        sections={sections}     //数据源
+        renderSectionHeader={this._sectionComp} // 区头
+        renderItem={this._renderItem} // cell
+        sections={sections} // 数据源
         // ItemSeparatorComponent={() => <View styles={{ backgroundColor: 'red', height: 1 }}></View>}  //分割线
-        stickySectionHeadersEnabled={true}  //设置区头是否悬浮在屏幕顶部,默认是true
-        initialNumToRender={initialNumToRender} //指定一开始渲染的元素数量，最好刚刚够填满一个屏幕，这样保证了用最短的时间给用户呈现可见的内容
-        onEndReachedThreshold={0.5}  //0.5表示距离内容最底部的距离为当前列表可见长度的一半时触发。
-        onEndReached={this.loadMoreDataThrottled}  //当列表被滚动到距离内容最底部不足onEndReachedThreshold的距离时调用。
+        stickySectionHeadersEnabled={true} // 设置区头是否悬浮在屏幕顶部,默认是true
+        initialNumToRender={initialNumToRender} // 指定一开始渲染的元素数量，最好刚刚够填满一个屏幕，这样保证了用最短的时间给用户呈现可见的内容
+        onEndReachedThreshold={0.5} // 0.5表示距离内容最底部的距离为当前列表可见长度的一半时触发。
+        onEndReached={this.loadMoreDataThrottled} // 当列表被滚动到距离内容最底部不足onEndReachedThreshold的距离时调用。
         setVerticalScrollBarEnabled={false}
         setFastScrollEnabled={false}
         refreshing={listState === RefreshState.HeaderRefreshing} // 是否刷新 ，自带刷新控件
@@ -548,7 +551,7 @@ export default class BaseSectionList extends PureComponent {
           return keyExtractor(item, index)
         }}
         ListEmptyComponent={this._renderEmpty()}
-        removeClippedSubviews={false} //true时，导致 安卓 debug 报错:index=6 count=0
+        removeClippedSubviews={false} // true时，导致 安卓 debug 报错:index=6 count=0
         onMomentumScrollEnd={
           (e) => {
             // console.log(name, '列表 onMomentumScrollEnd e.nativeEvent=', e.nativeEvent)
@@ -573,7 +576,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    height: 44,// backgroundColor: gRandomColor()
+    height: 44// backgroundColor: gRandomColor()
   },
   footerText: {
     fontSize: 14,

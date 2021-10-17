@@ -1,8 +1,8 @@
 import { View, Image, StyleSheet, Platform } from 'react-native'
-import tool from '../tools/tool'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+
 import HttpManager from './HttpManager'
 import * as netwrokCode from './netwrokCode'
-import * as stringTools from '../tools/stringTools'
 
 /**
  *

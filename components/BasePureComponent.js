@@ -5,7 +5,8 @@
  */
 import EventListener from '../tools/EventListener'
 import PropTypes from 'prop-types'
-import *as stringUtils from '../tools/stringTools'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+
 import PureComponent from './PureComponent'
 
 export default class BasePureComponent extends PureComponent {
@@ -15,10 +16,11 @@ export default class BasePureComponent extends PureComponent {
     // setState: PropTypes.func, // 初始化state
     state: PropTypes.object, // state 由 事件 改变，
     name: PropTypes.string,
-    changeStateEventName: PropTypes.string,// 不同的value 标记不同 的 BasePureComponent 控件监听 不同的
+    changeStateEventName: PropTypes.string, // 不同的value 标记不同 的 BasePureComponent 控件监听 不同的
     // ChangeStateEvent事件,外部发 事件 改变 事件 监听者 的 state
-    initData: PropTypes.func, //componentDidMount 生命周期 异步获取 服务端 初始数据事件
-    componentWillUnmount: PropTypes.func, componentDidUpdate: PropTypes.func,
+    initData: PropTypes.func, // componentDidMount 生命周期 异步获取 服务端 初始数据事件
+    componentWillUnmount: PropTypes.func,
+    componentDidUpdate: PropTypes.func
   }
 
   static defaultProps = {
@@ -32,8 +34,7 @@ export default class BasePureComponent extends PureComponent {
     //
     // },
     changeStateEventName:
-      ''
-    ,
+      '',
     state: {}
   }
 
@@ -43,17 +44,16 @@ export default class BasePureComponent extends PureComponent {
     this.state = props.state
 
     this.props.initData && this.props.initData(this)
-
   }
 
   componentDidMount () {
     const { changeStateEventName } = this.props
 
-    let self = this
+    const self = this
 
     // this.props.setState && this.props.setState(this)
 
-    if (!stringUtils.isNull(changeStateEventName)) {
+    if (!stringTools.isNull(changeStateEventName)) {
       this.changeStateEvent = new EventListener({
         eventName: changeStateEventName,
         eventCallback: (newState) => {
@@ -82,7 +82,7 @@ export default class BasePureComponent extends PureComponent {
     if (this.props.shouldComponentUpdate) {
       return this.props.shouldComponentUpdate(nextProps, nextState, this.state, this.props, this)
     } else {
-      let shouldComponentUpdate = super.shouldComponentUpdate(nextProps, nextState)
+      const shouldComponentUpdate = super.shouldComponentUpdate(nextProps, nextState)
       // console.log(this.props.name, '  shouldComponentUpdate:', shouldComponentUpdate)
       return shouldComponentUpdate
       // return super.shouldComponentUpdate(nextProps, nextState)

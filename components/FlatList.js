@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import {
   ActivityIndicator,
   FlatList,
@@ -7,23 +7,22 @@ import {
   RefreshControl,
   StyleSheet,
   TouchableOpacity,
-  View,
-} from "react-native";
-import ViewPropTypes from "./ViewPropTypes";
-import Text from "./Text/Text";
-import * as _ from "lodash";
-import constant from "../constant/constant";
-import tool from "../tools/tool";
-import appStyle from "../styles/appStyle";
-
+  View
+} from 'react-native'
+import ViewPropTypes from './ViewPropTypes'
+import Text from './Text/Text'
+import * as _ from 'lodash'
+import constant from '../constant/constant'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import appStyle from '../styles/appStyle'
 
 const _refreshControlStyle = {
   // backgroundColor: '#F5F5F5',
-  tintColor: "#666666",
-  titleColor: "#666666",
-  progressBackgroundColor: "#F5F5F5",
-  title: "Refreshing...",
-};
+  tintColor: '#666666',
+  titleColor: '#666666',
+  progressBackgroundColor: '#F5F5F5',
+  title: 'Refreshing...'
+}
 
 export const RefreshState = {
   Idle: 0,
@@ -31,8 +30,8 @@ export const RefreshState = {
   FooterRefreshing: 2,
   NoMoreData: 3, // 没有更多
   Failure: 4,
-  EmptyData: 5, // 完全无数据
-};
+  EmptyData: 5 // 完全无数据
+}
 
 /**
  * 通用层的 列表，借鉴 https://github.com/huanxsd/react-native-refresh-list-view
@@ -93,17 +92,17 @@ export default class _FlatList extends PureComponent {
     // hasAdsCell: PropTypes.bool,//列表第二页开始是否每页都有个 广告cell
     // addAdsCell: PropTypes.func,//从第二页开始，每页拿到数据后，在拿到的数据最底部 添加 一个 广告cell，
     page: PropTypes.number,
-    showListEmptyComponent: PropTypes.bool /* 是否在列表没数据时 渲染组件 */,
+    showListEmptyComponent: PropTypes.bool /* 是否在列表没数据时 渲染组件 */
   };
 
   // eslint-disable-next-line no-undef
   static defaultProps = {
-    name: "",
-    style: { backgroundColor: "#F5F5F5" },
+    name: '',
+    style: { backgroundColor: '#F5F5F5' },
     renderScrollTopBt: true,
     page: 0,
     renderRow: (item, index) => {
-      return <View style={{ width: "100%", height: 100 }} />;
+      return <View style={{ width: '100%', height: 100 }} />
     },
     showReFreshControl: true,
     cellHeight: 0,
@@ -116,48 +115,48 @@ export default class _FlatList extends PureComponent {
     showScrollToTop: true,
     onResetPressInEmptyList: null,
     renderEmptyList: null,
-    footerRefreshingText: "Loading…",
-    footerFailureText: "Click to reload",
-    footerNoMoreDataText: "No more data~",
-    footerEmptyDataText: "No relevant data",
+    footerRefreshingText: 'Loading…',
+    footerFailureText: 'Click to reload',
+    footerNoMoreDataText: 'No more data~',
+    footerEmptyDataText: 'No relevant data',
     initialNumToRender: constant.listPageSize / 2,
     pageSize: constant.listPageSize,
     registTabBarOnTwiceClickEvent: false,
     keyExtractor: (item, index) => {
-      return index; // 外部要 重写此方法，返回 每个item的 唯一标示，才能优化 列表性能
+      return index // 外部要 重写此方法，返回 每个item的 唯一标示，才能优化 列表性能
     },
     listState: (data, state, pageSize) => {
-      let listState = RefreshState.Idle;
+      let listState = RefreshState.Idle
       if (data.length === 0) {
         if (state.page === 1) {
-          listState = RefreshState.EmptyData;
+          listState = RefreshState.EmptyData
         } else {
-          listState = RefreshState.NoMoreData;
+          listState = RefreshState.NoMoreData
         }
       } else if (data.length > 0 && data.length < pageSize) {
-        listState = RefreshState.NoMoreData;
+        listState = RefreshState.NoMoreData
       }
-      console.log("FlatList listState=", listState);
-      return listState;
-    },
+      console.log('FlatList listState=', listState)
+      return listState
+    }
   };
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       data: [{ id: -111 }], // 数据源,没有数据源，一开始就不显示 下拉菊花，故一开始先留一个空item
       listState: RefreshState.Idle,
       scrollEnabled: true,
       listHeight: 0, // 为了 ListEmptyComponent
       page: this.props.page,
-      registTabBarOnTwiceClickEvent: this.props.registTabBarOnTwiceClickEvent,
-    };
+      registTabBarOnTwiceClickEvent: this.props.registTabBarOnTwiceClickEvent
+    }
     // https://www.wandouip.com/t5i154703/ 解决 onEndReached总是会同时调用两次 问题，但模拟器貌似没效果，真机 不用此 封装也很少调2次
-    this.loadMoreDataThrottled = _.throttle(this.onEndReached, 500);
-    this.showScrollTopBt = false;
-    this.adsIds = {}; // 当前列表生成过的 广告位的 id 集合，不能重复，否则 广告cell的 key 就会重复，导致渲染问题
-    this.skuIds = {};
-    this.viewOffset = 0;
+    this.loadMoreDataThrottled = _.throttle(this.onEndReached, 500)
+    this.showScrollTopBt = false
+    this.adsIds = {} // 当前列表生成过的 广告位的 id 集合，不能重复，否则 广告cell的 key 就会重复，导致渲染问题
+    this.skuIds = {}
+    this.viewOffset = 0
   }
 
   // changeRegistTabBarOnTwiceClickEvent (b) {
@@ -185,35 +184,35 @@ export default class _FlatList extends PureComponent {
   //   })
   // }
 
-  componentDidMount() {
-    this.refresh();
+  componentDidMount () {
+    this.refresh()
     // if (this.state.registTabBarOnTwiceClickEvent) {
     //   this.creatTabBarOnTwiceClickListener()
     // }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     // console.log('[RefreshListView]  RefreshListView componentWillReceiveProps nextProps= ' + nextProps)
   }
 
-  setScrollEnabled(b) {
-    this.setState({ scrollEnabled: b });
+  setScrollEnabled (b) {
+    this.setState({ scrollEnabled: b })
   }
 
   // eslint-disable-next-line no-undef
   refresh = () => {
-    const { refresh, name, onRefreshed, page } = this.props;
+    const { refresh, name, onRefreshed, page } = this.props
 
     if (this.shouldStartHeaderRefreshing()) {
-      if (!this.props.hasOwnProperty("refresh")) {
-        console.log("FlatList 的 refresh 属性没有");
-        return;
+      if (!this.props.hasOwnProperty('refresh')) {
+        console.log('FlatList 的 refresh 属性没有')
+        return
       }
       console.log(
-        "\nFlatList 准备获取",
+        '\nFlatList 准备获取',
         this.props.name,
-        " 列表的 第 1 页数据"
-      );
+        ' 列表的 第 1 页数据'
+      )
 
       // if (this.state.data.length > 0) {
       //   if (gisIos) {
@@ -226,79 +225,79 @@ export default class _FlatList extends PureComponent {
 
       // this.scrollToTop(false) 避免安卓手动下啦刷新后列表没有顶部对齐
 
-      this.showScrollTopBt = false;
+      this.showScrollTopBt = false
       // this.scrollTopBtR?.setState({ show: this.showScrollTopBt })
 
       this.setState(
         {
           listState: RefreshState.HeaderRefreshing,
           page: 1,
-          data: [],
+          data: []
         },
         async () => {
-          const [err, data] = await tool.to(refresh(this));
+          const [err, data] = await tool.to(refresh(this))
           if (data) {
             if (data && data.length > 0) {
               console.log(
-                "FlatList 获取 ",
+                'FlatList 获取 ',
                 name,
-                " 列表的 第",
+                ' 列表的 第',
                 this.state.page,
-                "页数据 成功，准备刷新ui，data=",
+                '页数据 成功，准备刷新ui，data=',
                 data
-              );
+              )
               this.setState(
                 {
                   data: data,
                   listState: this.changeListState(data),
                   page: this.state.page,
-                  scrollEnabled: true,
+                  scrollEnabled: true
                 },
                 () => {
-                  console.log("FlatList.js 列表刷新 状态完毕");
-                  onRefreshed && onRefreshed(this);
+                  console.log('FlatList.js 列表刷新 状态完毕')
+                  onRefreshed && onRefreshed(this)
                 }
-              );
+              )
             } else {
               this.setState(
                 {
                   data: [],
                   listState: this.changeListState([]),
                   page: 1,
-                  scrollEnabled: false,
+                  scrollEnabled: false
                 },
                 () => {}
-              );
+              )
             }
           } else {
             console.log(
-              "FlatList 获取 ",
+              'FlatList 获取 ',
               name,
-              " 列表的 第",
+              ' 列表的 第',
               this.state.page,
-              "页数据 失败"
-            );
+              '页数据 失败'
+            )
             this.setState(
               {
                 data: [],
                 listState: this.changeListState([]),
                 page: 1,
-                scrollEnabled: false,
+                scrollEnabled: false
               },
               () => {}
-            );
+            )
           }
         }
-      );
+      )
     }
   };
 
-  changeListState(data) {
-    return this.props.listState(data, this.state, this.props.pageSize);
+  changeListState (data) {
+    return this.props.listState(data, this.state, this.props.pageSize)
   }
 
-  getDataSource() {
-    return this.state.data;
+  getDataSource () {
+    return this.state.data
   }
 
   /**
@@ -337,73 +336,73 @@ export default class _FlatList extends PureComponent {
 
   // eslint-disable-next-line no-undef
   onEndReached = (info) => {
-    const { page } = this.state;
+    const { page } = this.state
     if (this.shouldStartFooterRefreshing()) {
       // log('[RefreshListView]  onFooterRefresh')
       // this.props.onFooterRefresh && this.props.onFooterRefresh(RefreshState.FooterRefreshing)
       this.setState(
         {
           listState: RefreshState.FooterRefreshing,
-          page: page + 1,
+          page: page + 1
         },
         () => {
           console.log(
-            "\n FlatList 准备获取",
+            '\n FlatList 准备获取',
             this.props.name,
-            " 列表的 第 ",
+            ' 列表的 第 ',
             this.state.page,
-            "页数据"
-          );
+            '页数据'
+          )
           this.props
             .loadMore(this.state.page, this)
             .then((data) => {
               if (data && data.length > 0) {
                 console.log(
-                  "FlatList 获取 ",
+                  'FlatList 获取 ',
                   this.props.name,
-                  " 列表的 第",
+                  ' 列表的 第',
                   this.state.page,
-                  "页数据 成功，准备刷新ui，data=",
+                  '页数据 成功，准备刷新ui，data=',
                   data
-                );
+                )
                 this.setState(
                   {
                     data: this.state.data.concat(data),
-                    listState: this.changeListState(data),
+                    listState: this.changeListState(data)
                   },
                   () => {
                     // this.page++
                   }
-                );
+                )
               } else {
                 this.setState(
                   {
                     listState: this.changeListState([]),
-                    page: this.state.page - 1,
+                    page: this.state.page - 1
                   },
                   () => {}
-                );
+                )
               }
             })
             .catch((e) => {
               console.log(
-                "FlatList 获取 ",
+                'FlatList 获取 ',
                 this.props.name,
-                " 列表的 第",
+                ' 列表的 第',
                 this.state.page,
-                "页数据 失败",
+                '页数据 失败',
                 e
-              );
+              )
               this.setState(
                 {
                   listState: this.changeListState([]),
-                  page: this.state.page - 1,
+                  page: this.state.page - 1
                 },
                 () => {}
-              );
-            });
+              )
+            })
         }
-      );
+      )
     }
   };
 
@@ -413,18 +412,18 @@ export default class _FlatList extends PureComponent {
       this.state.listState === RefreshState.HeaderRefreshing ||
       this.state.listState === RefreshState.FooterRefreshing
     ) {
-      return false;
+      return false
     }
 
-    return true;
+    return true
   };
 
-  scrollToTop(animated = false) {
+  scrollToTop (animated = false) {
     // this.listRef.scrollToIndex({ index: 0, animated: animated })
     if (this.state.data.length > 0) {
-      if (Platform.OS === "ios") {
+      if (Platform.OS === 'ios') {
         this.listRef &&
-          this.listRef.setNativeProps({ contentOffset: { x: 0, y: 0 } }); // 安卓没效果
+          this.listRef.setNativeProps({ contentOffset: { x: 0, y: 0 } }) // 安卓没效果
       } else if (this.state.data) {
         // ios 也没效果
         this.listRef &&
@@ -432,8 +431,8 @@ export default class _FlatList extends PureComponent {
             viewPosition: 0,
             animated: true,
             index: 0,
-            viewOffset: this.viewOffset,
-          }); //
+            viewOffset: this.viewOffset
+          }) //
       }
     }
   }
@@ -442,38 +441,38 @@ export default class _FlatList extends PureComponent {
    * 滚动到 指定下标, index starts from 0
    * @param animated
    */
-  scrollToIndex({
+  scrollToIndex ({
     animated = true,
     cellH,
     index = 0,
     viewPosition = 0,
-    viewOffset = 0,
+    viewOffset = 0
   }) {
-    console.log("FlatList scrollToIndex index=", index, " cellH=", cellH);
+    console.log('FlatList scrollToIndex index=', index, ' cellH=', cellH)
     this.state.data.length > 0 &&
       this.listRef?.scrollToIndex({
         viewPosition: viewPosition,
         animated: animated,
         index: index,
-        viewOffset: viewOffset,
-      });
+        viewOffset: viewOffset
+      })
   }
 
   // eslint-disable-next-line no-undef
   shouldStartFooterRefreshing = () => {
     // log('[RefreshListView]  shouldStartFooterRefreshing')
 
-    const { listState, data } = this.state;
+    const { listState, data } = this.state
     if (data.length === 0) {
-      return false;
+      return false
     }
 
-    return listState === RefreshState.Idle;
+    return listState === RefreshState.Idle
   };
 
   // eslint-disable-next-line no-undef
   renderFooter = () => {
-    let footer = null;
+    let footer = null
 
     const {
       footerRefreshingText,
@@ -485,23 +484,23 @@ export default class _FlatList extends PureComponent {
       footerFailureComponent,
       footerNoMoreDataComponent,
       footerEmptyDataComponent,
-      footerTextStyle,
-    } = this.props;
+      footerTextStyle
+    } = this.props
 
     switch (this.state.listState) {
       case RefreshState.Idle:
-        footer = <View style={styles.footerContainer} />;
-        break;
+        footer = <View style={styles.footerContainer} />
+        break
       case RefreshState.Failure: {
         footer = (
           <TouchableOpacity
             onPress={() => {
               if (this.props.data.length === 0) {
                 this.props.refresh &&
-                  this.props.refresh(RefreshState.HeaderRefreshing);
+                  this.props.refresh(RefreshState.HeaderRefreshing)
               } else {
                 this.props.onFooterRefresh &&
-                  this.props.onFooterRefresh(RefreshState.FooterRefreshing);
+                  this.props.onFooterRefresh(RefreshState.FooterRefreshing)
               }
             }}
           >
@@ -513,8 +512,8 @@ export default class _FlatList extends PureComponent {
               </View>
             )}
           </TouchableOpacity>
-        );
-        break;
+        )
+        break
       }
       case RefreshState.EmptyData: {
         // footer = (
@@ -529,7 +528,7 @@ export default class _FlatList extends PureComponent {
         //     )}
         //   </TouchableOpacity>
         // )
-        break;
+        break
       }
       case RefreshState.FooterRefreshing: {
         footer = footerRefreshingComponent || (
@@ -539,8 +538,8 @@ export default class _FlatList extends PureComponent {
               {footerRefreshingText}
             </Text>
           </View>
-        );
-        break;
+        )
+        break
       }
       case RefreshState.NoMoreData: {
         footer = footerNoMoreDataComponent || (
@@ -549,29 +548,29 @@ export default class _FlatList extends PureComponent {
               {footerNoMoreDataText}
             </Text>
           </View>
-        );
-        break;
+        )
+        break
       }
     }
 
-    return footer;
+    return footer
   };
 
   // eslint-disable-next-line no-undef
   onResetPressInEmptyList = () => {
-    this.props.onResetPressInEmptyList(this);
+    this.props.onResetPressInEmptyList(this)
   };
 
-  _renderEmpty() {
+  _renderEmpty () {
     // console.log('FlatList.js _renderEmpty listState=', this.state.listState)
-    return !this.props.hasOwnProperty("renderHeader") &&
+    return !this.props.hasOwnProperty('renderHeader') &&
       this.props.renderEmptyList &&
       (this.state.listState === RefreshState.Idle ||
         this.state.listState === RefreshState.EmptyData) ? (
-      /* 避免在下拉刷新时显示 */ <View
+    /* 避免在下拉刷新时显示 */ <View
         style={{
           flex: 1, // backgroundColor: appStyle.randomColor(),
-          height: this.state.listHeight,
+          height: this.state.listHeight
         }}
       >
         {this.props.renderEmptyList(
@@ -580,30 +579,30 @@ export default class _FlatList extends PureComponent {
             : this.onResetPressInEmptyList
         )}
       </View>
-    ) : (
+        ) : (
       <View />
-    );
+        )
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate (prevProps, prevState, snapshot) {
     console.log(
-      "FlatList ",
+      'FlatList ',
       this.props.name,
-      " 列表 已重绘,state= ",
+      ' 列表 已重绘,state= ',
       this.state
-    );
+    )
     this.props.componentDidUpdate &&
-      this.props.componentDidUpdate(prevProps, prevState, snapshot, this.state);
+      this.props.componentDidUpdate(prevProps, prevState, snapshot, this.state)
   }
 
-  componentWillUnmount() {
-    this.loadMoreDataThrottled.cancel();
+  componentWillUnmount () {
+    this.loadMoreDataThrottled.cancel()
     this.tabBarOnTwiceClickListener &&
-      this.tabBarOnTwiceClickListener.removeEventListener();
-    this.tabBarOnTwiceClickListener = null;
+      this.tabBarOnTwiceClickListener.removeEventListener()
+    this.tabBarOnTwiceClickListener = null
   }
 
-  render() {
+  render () {
     const {
       name,
       renderRow,
@@ -625,26 +624,26 @@ export default class _FlatList extends PureComponent {
       showReFreshControl,
       showListEmptyComponent,
       ...rest
-    } = this.props;
-    const { listHeight, data, listState, scrollEnabled } = this.state;
-    console.log("FlatList ", name, " 列表 开始重绘，state=", this.state);
+    } = this.props
+    const { listHeight, data, listState, scrollEnabled } = this.state
+    console.log('FlatList ', name, ' 列表 开始重绘，state=', this.state)
     // console.log('getItemLayout', getItemLayout)
-    const _rest = {};
-    let _getItemLayout = getItemLayout;
+    const _rest = {}
+    let _getItemLayout = getItemLayout
     if (!_getItemLayout && cellHeight !== 0) {
       // 没传 getItemLayout 但传了 cellHeight
       _getItemLayout = (data, index) => {
-        return { length: cellHeight, offset: cellHeight * index, index };
-      };
-      _rest.getItemLayout = _getItemLayout;
+        return { length: cellHeight, offset: cellHeight * index, index }
+      }
+      _rest.getItemLayout = _getItemLayout
     }
-    console.log("FlatList _rest=", _rest);
+    console.log('FlatList _rest=', _rest)
 
     return (
       <View style={[styles.container, style]}>
         <FlatList
           ref={(r) => {
-            this.listRef = r;
+            this.listRef = r
           }}
           pagingEnabled={pagingEnabled}
           onLayout={(e) => {
@@ -654,19 +653,19 @@ export default class _FlatList extends PureComponent {
               showListEmptyComponent
             ) {
               console.log(
-                "FlatList 设置 " +
+                'FlatList 设置 ' +
                   name +
-                  " 列表的 listHeight，马上重绘,e.nativeEvent.layout.height=",
+                  ' 列表的 listHeight，马上重绘,e.nativeEvent.layout.height=',
                 e.nativeEvent.layout.height
-              );
+              )
               this.setState({
                 // 为了显示 ListEmptyComponent
-                listHeight: e.nativeEvent.layout.height,
-              });
+                listHeight: e.nativeEvent.layout.height
+              })
             }
           }}
           onScroll={(event) => {
-            onScroll && onScroll(event, this);
+            onScroll && onScroll(event, this)
           }}
           refreshControl={
             showReFreshControl && (
@@ -675,7 +674,7 @@ export default class _FlatList extends PureComponent {
                 tintColor={refreshControlStyle.tintColor}
                 title={refreshControlStyle.title}
                 titleColor={refreshControlStyle.titleColor}
-                colors={["#24292e", "#42464b"]}
+                colors={['#24292e', '#42464b']}
                 progressBackgroundColor={
                   refreshControlStyle.progressBackgroundColor
                 }
@@ -697,18 +696,18 @@ export default class _FlatList extends PureComponent {
                 <View
                   style={{
                     flex: 1,
-                    width: "100%",
-                    height: (appStyle.screenHeight),
+                    width: '100%',
+                    height: (appStyle.screenHeight)
                     // backgroundColor: gRandomColor()
                   }}
                 />
-              );
+              )
             } else {
-              return renderRow(item, index);
+              return renderRow(item, index)
             }
           }}
           keyExtractor={(item, index) => {
-            return keyExtractor(item, index);
+            return keyExtractor(item, index)
           }}
           ListHeaderComponent={ListHeaderComponent}
           ListFooterComponent={renderFooter && this.renderFooter}
@@ -720,16 +719,16 @@ export default class _FlatList extends PureComponent {
           getItemLayout={_getItemLayout}
           onMomentumScrollEnd={(e) => {
             console.log(
-              "FlatList ",
+              'FlatList ',
               name,
-              "列表 onMomentumScrollEnd e.nativeEvent=",
+              '列表 onMomentumScrollEnd e.nativeEvent=',
               e.nativeEvent
-            );
+            )
             if (renderScrollTopBt) {
-              this.showScrollTopBt = e.nativeEvent.contentOffset.y > 10;
+              this.showScrollTopBt = e.nativeEvent.contentOffset.y > 10
               // this.scrollTopBtR?.setState({ show: this.showScrollTopBt })
             }
-            onMomentumScrollEnd && onMomentumScrollEnd(e);
+            onMomentumScrollEnd && onMomentumScrollEnd(e)
           }}
           // 以下的性能优化参数 https://www.cnblogs.com/skychx/p/react-native-flatlist.html
           initialNumToRender={initialNumToRender}
@@ -740,7 +739,7 @@ export default class _FlatList extends PureComponent {
           maxToRenderPerBatch={constant.listPageSize * 3} // 增量渲染最大数量
           updateCellsBatchingPeriod={50} // 增量渲染时间间隔
           // 限制 滚动速度,越小越慢
-          decelerationRate={Platform.OS === "android" ? 0.95 : 1}
+          decelerationRate={Platform.OS === 'android' ? 0.95 : 1}
           // debug={__DEV__} // 开启 debug 模式
           // legacyImplementation={true}
           {...rest}
@@ -748,7 +747,7 @@ export default class _FlatList extends PureComponent {
         />
         {/* {this.renderScrollTopBt()} */}
       </View>
-    );
+    )
   }
 }
 
@@ -756,19 +755,19 @@ export default class _FlatList extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: appStyle.pageBackgroundColor,
+    backgroundColor: appStyle.pageBackgroundColor
   },
   footerContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 10,
-    height: 44,
+    height: 44
   },
   footerText: {
     fontSize: 11,
-    alignSelf: "center",
-    color: "#999999",
-  },
-});
+    alignSelf: 'center',
+    color: '#999999'
+  }
+})

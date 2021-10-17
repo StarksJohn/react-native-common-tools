@@ -4,11 +4,11 @@
 import EventListener from './EventListener'
 import constant from '../constant/constant'
 
-//构造函数
+// 构造函数
 const homeSpringBoxQueue = function () {
-  console.log('homeSpringBoxQueue construct ',)
-  this.homePageBombQueue = []/*执行的任务队列*/
-  //执行某个任务的事件
+  console.log('homeSpringBoxQueue construct ')
+  this.homePageBombQueue = []/* 执行的任务队列 */
+  // 执行某个任务的事件
   this.executeListener = new EventListener({
     eventName: constant.event.executeHomeSpringBoxQueueEvent,
     eventCallback: ({ taskID }) => {
@@ -17,7 +17,7 @@ const homeSpringBoxQueue = function () {
       })
       if (task) {
         task.func((b) => {
-          if (b) {// 当前任务执行完毕,删除任务，继续执行
+          if (b) { // 当前任务执行完毕,删除任务，继续执行
             this.homePageBombQueue.splice(0, 1)
             this.executQueue()
           }
@@ -29,13 +29,13 @@ const homeSpringBoxQueue = function () {
 }
 
 homeSpringBoxQueue.prototype.init = async function () {
-  console.log('homeSpringBoxQueue init ',)
+  console.log('homeSpringBoxQueue init ')
 
   /**
    * 添加任务进队列
    */
   this.addFuncTuQueue = ({ func }) => {
-    this.homePageBombQueue.push({ taskID: this.homePageBombQueue.length, func, })
+    this.homePageBombQueue.push({ taskID: this.homePageBombQueue.length, func })
   }
 
   /**
@@ -46,7 +46,7 @@ homeSpringBoxQueue.prototype.init = async function () {
   }
 }
 
-const singleton = (function () {
+const singleton = function () {
   let instance
   return function () {
     if (!instance) {
@@ -54,6 +54,6 @@ const singleton = (function () {
     }
     return instance
   }
-})
+}
 
 export default new singleton()()

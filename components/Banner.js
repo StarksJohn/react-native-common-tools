@@ -5,7 +5,7 @@ import { Image, StyleSheet, ImageBackground, View } from 'react-native'
 import ViewPropTypes from './ViewPropTypes'
 import PureComponent from './PureComponent'
 import { Carousel } from 'teaset'
-import tool from '../tools/tool'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
 
 /**
  * 轮播图广告控件
@@ -14,14 +14,18 @@ export default class Banner extends PureComponent {
   // 定义props类型
   static propTypes = {
     data: PropTypes.array,
-    style: ViewPropTypes.style, api: PropTypes.func,
-    renderItem: PropTypes.func, control: PropTypes.element/*包含小圆点的容器控件*/,
+    style: ViewPropTypes.style,
+    api: PropTypes.func,
+    renderItem: PropTypes.func,
+    control: PropTypes.element/* 包含小圆点的容器控件 */
   }
 
   static defaultProps = {
-    data: [], style: {},
+    data: [],
+    style: {},
     renderItem: () => {
-    }, control: <Carousel.Control style={{ backgroundColor: 'red', position: 'absolute', bottom: (40), left: (16), }} dot={<View
+    },
+    control: <Carousel.Control style={{ backgroundColor: 'red', position: 'absolute', bottom: (40), left: (16) }} dot={<View
       style={{
         width: (5),
         height: (5),
@@ -38,16 +42,16 @@ export default class Banner extends PureComponent {
       }}></View>} />
   }
 
-// 构造方法
+  // 构造方法
   constructor (props) {
     super(props)
     // 定义state
     this.state = {
-      data: props.data,
+      data: props.data
     }
   }
 
-// 组件已装载
+  // 组件已装载
   async componentDidMount () {
     if (!this.state.data && this.props.api) {
       const [err, data] = await tool.to(this.props.api())
@@ -68,7 +72,7 @@ export default class Banner extends PureComponent {
   componentDidUpdate (prevProps, prevState) {
   }
 
-// 组件即将卸载
+  // 组件即将卸载
   componentWillUnmount () {
   }
 

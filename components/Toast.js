@@ -1,9 +1,9 @@
 // import RN组件 代码模板
-import React from 'react';
-import { Toast } from 'teaset';
+import React from 'react'
+import { Toast } from 'teaset'
 import Text from './Text/Text'
 
-let toastKey = null;
+let toastKey = null
 
 export default function ({
   style,
@@ -12,10 +12,10 @@ export default function ({
   duration = 'short',
   position = 'center',
   modal = false,
-  icon = null,
+  icon = null
 }) {
-  toastKey && Toast.hide(toastKey);
-  toastKey = null;
+  toastKey && Toast.hide(toastKey)
+  toastKey = null
   toastKey = Toast.show({
     style: [{ borderRadius: 10, style }],
     text: (
@@ -25,11 +25,11 @@ export default function ({
             fontSize: 12,
             color: '#FFFFFF',
             marginHorizontal: 20,
-            fontFamily: 'PingFangSC-Regular', //backgroundColor: gRandomColor(),
+            fontFamily: 'PingFangSC-Regular', // backgroundColor: gRandomColor(),
             marginVertical: 10,
-            lineHeight: 16,
+            lineHeight: 16
           },
-          textStyle,
+          textStyle
         ]}
         numberOfLines={1}
       >
@@ -39,6 +39,6 @@ export default function ({
     duration,
     position,
     modal,
-    icon,
-  });
+    icon
+  })
 }

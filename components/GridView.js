@@ -24,9 +24,11 @@ export default class BaseGridView extends PureComponent {
     renderFailStateView: PropTypes.func, // 画 无数据 状态
     fetchData: PropTypes.func, // 外部 container 决定 调哪个api 获取数据
     style: ViewPropTypes.style, // 拿到数据后,fetchOk 状态的 容器样式，为了在小屏时，每个item的位置正确，建议 设置 justifyContent:'space-between'
-    changeSelectIndexEventName: PropTypes.string,// 改变网格里选择的 内容的 下标
-    componentDidMount: PropTypes.func, componentWillUnmount: PropTypes.func, name: PropTypes.string,
-    shouldComponentUpdate: PropTypes.func,
+    changeSelectIndexEventName: PropTypes.string, // 改变网格里选择的 内容的 下标
+    componentDidMount: PropTypes.func,
+    componentWillUnmount: PropTypes.func,
+    name: PropTypes.string,
+    shouldComponentUpdate: PropTypes.func
   }
 
   static defaultProps = {
@@ -46,7 +48,9 @@ export default class BaseGridView extends PureComponent {
   constructor (props) {
     super(props)
     this.state = {
-      _state: BaseGridViewStates.fetchOk, items: props.items, width: props.width,
+      _state: BaseGridViewStates.fetchOk,
+      items: props.items,
+      width: props.width,
       selectIndex: -1// 网格里有多个选项时，当前选中的下标
     }
   }
@@ -126,7 +130,7 @@ export default class BaseGridView extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  container: {// 最大的容器 默认
+  container: { // 最大的容器 默认
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap'

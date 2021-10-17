@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import * as stringTools from './stringTools'
-import tool from './tool'
+import { stringTools, tool } from 'full-stack-front-end-tools'
 /**
  *
  * @param key

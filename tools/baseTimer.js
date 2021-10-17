@@ -10,7 +10,7 @@ export default class baseTimer {
     this.interval = null
 
     if (!props.timeInterval) {
-      this.timeInterval = 1000//默认1000毫秒
+      this.timeInterval = 1000// 默认1000毫秒
     } else {
       this.timeInterval = props.timeInterval
     }
@@ -18,8 +18,7 @@ export default class baseTimer {
     this.interval = setInterval(
       () => {
         // Log.log('this.timerNum==  '+  this.timerNums )
-        this.props.callBack && this.props.callBack() //每隔 timeInterval 秒 做的事情
-
+        this.props.callBack && this.props.callBack() // 每隔 timeInterval 秒 做的事情
       }, this.timeInterval
     )
   }
@@ -28,7 +27,6 @@ export default class baseTimer {
     if (this.interval) {
       clearInterval(this.interval)
       console.log('BaseTimer.js  clear()')
-
     }
   }
 }

@@ -1,15 +1,14 @@
 import {
-  Clipboard,
+  Clipboard
 } from 'react-native'
-import *as stringUtils from './stringTools'
-import tool from './tool'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
 
 /**
  * 因 安卓经常 拿不到 粘贴板数据，故 多获取几次
  */
 export default async function () {
   let textFromClipboard = ''
-  let count = 20
+  const count = 20
   for (let i = 0; i < count; i++) {
     console.log('clipboardTools.js getClipboardStr i=', i)
     const [err, data] = await tool.to(Clipboard.getString())

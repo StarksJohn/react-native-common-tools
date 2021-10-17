@@ -6,12 +6,12 @@
 import {
   DeviceEventEmitter
 } from 'react-native'
-import *as stringUtils from './stringTools'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
 
 /**
  * 任何地方都可调用的 发送 某个消息的 方法
  */
-export const sendEvent =  (eventName: string, extraInfo = {}) =>{
+export const sendEvent = (eventName: string, extraInfo = {}) => {
   DeviceEventEmitter.emit(eventName, { ...extraInfo, eventName })
 }
 
@@ -43,7 +43,7 @@ export default class EventListener {
 
   eventCallback (p: { eventName: string }, self: this) {
     // @ts-ignore
-    if (!stringUtils.isNull(p.eventName) && p.eventName === self.state?.eventName) {
+    if (!stringTools.isNull(p.eventName) && p.eventName === self.state?.eventName) {
       // @ts-ignore
       self.state?.eventCallback(p)
     }

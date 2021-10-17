@@ -1,7 +1,8 @@
 /* eslint-disable consistent-return */
 import _ from 'lodash'
-import objTools from '../tools/objTools'
-import tool, { cacheAnAttributeOfInitStateProps } from '../tools/tool'
+import { cacheAnAttributeOfInitStateProps } from 'react-cacheable-dva'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+
 import asyncStorage from '../tools/asyncStorage'
 import baseModel from './baseModel'
 

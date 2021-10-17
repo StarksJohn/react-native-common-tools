@@ -10,7 +10,7 @@ import TextBt from './TextBt'
 
 const _countNums = 60
 
-//获取验证码按钮,带 倒计时 60秒
+// 获取验证码按钮,带 倒计时 60秒
 export default class VerificationCodeBt extends PureComponent {
   // 定义props类型
   static propTypes = {
@@ -23,7 +23,8 @@ export default class VerificationCodeBt extends PureComponent {
   }
 
   static defaultProps = {
-    style: {}, beginCounting: () => {
+    style: {},
+    beginCounting: () => {
 
     }
   }
@@ -95,7 +96,6 @@ export default class VerificationCodeBt extends PureComponent {
       <TextBt style={style} title={counting ? countNums + 's' : title} textStyle={disable ? textStyle : countingTextStyle}
               onPress={async () => {
                 this.beginCounting()
-
               }} disable={disable}
       >
       </TextBt>
@@ -105,4 +105,3 @@ export default class VerificationCodeBt extends PureComponent {
 
 // 创建样式表
 const styles = StyleSheet.create({})
-
