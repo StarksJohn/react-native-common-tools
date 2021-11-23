@@ -1,6 +1,6 @@
 {
   "name": "react-native-common-tools",
-  "version": "1.0.41",
+  "version": "1.0.42",
   "description": "Contains some modules commonly used in react native",
   "main": "index.ts",
   "scripts": {
@@ -26,6 +26,7 @@
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "qs": "^6.10.1",
+    "react-cacheable-dva": "^1.0.18",
     "react-native": "0.63.4",
     "react-native-easy-app": "^1.7.27",
     "react-native-iphone-x-helper": "^1.3.1",

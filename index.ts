@@ -1,5 +1,4 @@
 import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'starkfrontendtools'
-
 // import baseTimer from './tools/baseTimer'
 import EventListener, { sendEvent } from './tools/EventListener'
 // import * as screenTools from './tools/screenTools'
@@ -45,10 +44,9 @@ import MyStyleSheet from './styles/MyStyleSheet'
 import { List, one_section_array } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
 import * as request from './api/request'
+import { dvaApp } from 'react-cacheable-dva'
 
 
-export interface RouteProps extends _RouteProps{
-};
 
 export {
   // baseTimer,
@@ -101,5 +99,5 @@ export {
   MyStyleSheet,
   List,
   one_section_array,
-  request
+  request,dvaApp
 }
