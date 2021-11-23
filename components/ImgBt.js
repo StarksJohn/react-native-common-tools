@@ -15,7 +15,7 @@ import {
 } from 'react-native'
 import Button from './Button'
 import PureComponent from './PureComponent'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import {  stringTools } from 'starkfrontendtools'
 
 export default class ImgBt extends PureComponent {
   static propTypes = {

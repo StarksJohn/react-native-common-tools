@@ -13,7 +13,7 @@ import ViewPropTypes from './ViewPropTypes'
 import Text from './Text/Text'
 import * as _ from 'lodash'
 import constant from '../constant/constant'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import {  tool } from 'starkfrontendtools'
 import appStyle from '../styles/appStyle'
 
 const _refreshControlStyle = {

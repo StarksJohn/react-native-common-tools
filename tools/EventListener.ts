@@ -6,7 +6,7 @@
 import {
   DeviceEventEmitter
 } from 'react-native'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import { stringTools } from 'starkfrontendtools'
 
 /**
  * 任何地方都可调用的 发送 某个消息的 方法

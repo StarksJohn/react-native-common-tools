@@ -3,7 +3,7 @@
  */
 import { Platform } from 'react-native'
 import * as netwrokCode from './netwrokCode'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import { tool } from 'starkfrontendtools'
 
 export const CONTENT_TYPE_JSON = 'application/json'
 export const CONTENT_TYPE_FORM = 'application/x-www-form-urlencoded'

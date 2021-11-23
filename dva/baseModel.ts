@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import {  objTools, tool } from 'starkfrontendtools'
 
 import asyncStorage from '../tools/asyncStorage'
 

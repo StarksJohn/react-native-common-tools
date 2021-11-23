@@ -5,7 +5,7 @@
  */
 import EventListener from '../tools/EventListener'
 import PropTypes from 'prop-types'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import {  stringTools } from 'starkfrontendtools'
 
 import PureComponent from './PureComponent'
 

@@ -1,7 +1,7 @@
 import {
   Clipboard
 } from 'react-native'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import {  tool } from 'starkfrontendtools'
 
 /**
  * 因 安卓经常 拿不到 粘贴板数据，故 多获取几次

@@ -1,4 +1,4 @@
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'starkfrontendtools'
 
 // import baseTimer from './tools/baseTimer'
 import EventListener, { sendEvent } from './tools/EventListener'

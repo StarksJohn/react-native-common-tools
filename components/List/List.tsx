@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo, memo, useCallback, forward
 import { Image, View, SafeAreaView, StyleSheet, Text, TouchableOpacity, ImageBackground } from 'react-native'
 import PropTypes from 'prop-types'
 import MyStyleSheet from '../../styles/MyStyleSheet'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import { objTools, tool } from 'starkfrontendtools'
 import { LargeList, LargeListDataType, IndexPath } from 'react-native-largelist'
 import { ChineseWithLastDateHeader, ChineseWithLastDateFooter } from 'react-native-spring-scrollview/Customize'
 import { Offset } from 'react-native-spring-scrollview'

@@ -5,7 +5,7 @@ import { Image, StyleSheet, ImageBackground, View } from 'react-native'
 import ViewPropTypes from './ViewPropTypes'
 import PureComponent from './PureComponent'
 import { Carousel } from 'teaset'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import {  tool } from 'starkfrontendtools'
 
 /**
  * 轮播图广告控件

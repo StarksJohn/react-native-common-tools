@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Platform, Text } from 'react-native'
 import { fontWeightToFontFamily } from './getFontFamily'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'starkfrontendtools'
 
 /**
  * https://juejin.im/post/5ce66c26e51d4555fd20a2a0

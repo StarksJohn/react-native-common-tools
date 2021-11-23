@@ -11,7 +11,7 @@ import ViewPropTypes from './ViewPropTypes'
 import * as _ from 'lodash'
 import PureComponent from './PureComponent'
 import constant from '../constant/constant'
-import { ahooks, arrayTools, dateTools, Math, objTools, stringTools, tool } from 'full-stack-front-end-tools'
+import {  tool } from 'starkfrontendtools'
 
 const _refreshControlStyle = {
   // backgroundColor: '#F5F5F5',
