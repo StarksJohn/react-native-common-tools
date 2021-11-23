@@ -31,9 +31,6 @@ import useAndroidBackHandler from './components/CustomHooks/useAndroidBackHandle
 // import useSubscribeKeyboard from './components/CustomHooks/useSubscribeKeyboard'
 import asyncStorage from './tools/asyncStorage'
 import dva from './dva/dva'
-import baseModel from './dva/baseModel'
-import models from './dva/models'
-// import modelTools from './dva/modelTools'
 // import {
 //   XHttp,
 //   XImage,
@@ -49,11 +46,7 @@ import MyStyleSheet from './styles/MyStyleSheet'
 import { List, one_section_array } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
 import * as request from './api/request'
-import { modelProps as _modelProps } from './dva/modelProps'
-import dvaApp from './dva/dvaApp'
 
-export interface modelProps extends _modelProps{
-}
 
 export interface RouteProps extends _RouteProps{
 };
@@ -97,9 +90,6 @@ export {
   asyncStorage,
   objTools,
   dva,
-  baseModel,
-  models,
-  // modelTools,
   // XHttp,
   // XView,
   // XImage,
@@ -113,5 +103,5 @@ export {
   MyStyleSheet,
   List,
   one_section_array,
-  request, dvaApp
+  request
 }
