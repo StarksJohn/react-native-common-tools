@@ -1,6 +1,6 @@
 {
   "name": "react-native-common-tools",
-  "version": "1.0.39",
+  "version": "1.0.40",
   "description": "Contains some modules commonly used in react native",
   "main": "index.ts",
   "scripts": {

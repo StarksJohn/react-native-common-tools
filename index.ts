@@ -30,7 +30,6 @@ import constant from './constant/constant'
 import useAndroidBackHandler from './components/CustomHooks/useAndroidBackHandler'
 // import useSubscribeKeyboard from './components/CustomHooks/useSubscribeKeyboard'
 import asyncStorage from './tools/asyncStorage'
-import dva from './dva/dva'
 // import {
 //   XHttp,
 //   XImage,
@@ -89,7 +88,6 @@ export {
   useAndroidBackHandler,
   asyncStorage,
   objTools,
-  dva,
   // XHttp,
   // XView,
   // XImage,
