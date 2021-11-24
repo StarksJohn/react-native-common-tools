@@ -44,9 +44,6 @@ import MyStyleSheet from './styles/MyStyleSheet'
 import { List, one_section_array } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
 import * as request from './api/request'
-import { dvaApp } from 'react-cacheable-dva'
-
-
 
 export {
   // baseTimer,
@@ -99,5 +96,5 @@ export {
   MyStyleSheet,
   List,
   one_section_array,
-  request,dvaApp
+  request
 }
