@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{react-native-common-tools/node_modules}" />
-    <file url="PROJECT" libraries="{@types/navigation, @types/node, @types/prop-types, @types/react-app, @types/react-bootstrap, @types/react-document-title, @types/react-input-mask, @types/react-instantsearch-native, @types/react-native, @types/react-native-autocomplete-input, @types/react-native-collapsible, @types/react-native-communications, @types/react-native-datepicker, @types/react-native-doc-viewer, @types/react-native-document-picker, @types/react-native-drawer, @types/react-native-drawer-layout, @types/react-native-fabric, @types/react-native-fbsdk, @types/react-native-fetch-blob, @types/react-native-fs, @types/react-native-google-signin, @types/react-native-keep-awake, @types/react-native-linear-gradient, @types/react-native-material-design-searchbar, @types/react-native-material-kit, @types/react-native-material-ui, @types/react-native-mixpanel, @types/react-native-orientation, @types/react-native-popup-dialog, @types/react-native-push-notification, @types/react-native-qrcode, @types/react-native-safari-view, @types/react-native-scrollable-tab-view, @types/react-native-sensor-manager, @types/react-native-snap-carousel, @types/react-native-sortable-grid, @types/react-native-sortable-list, @types/react-native-svg-uri, @types/react-native-swiper, @types/react-native-tab-navigator, @types/react-native-tab-view, @types/react-native-touch-id, @types/react-native-vector-icons, @types/react-native-video, @types/react-navigation, @types/stylus, axios, react-native-common-tools/node_modules, vue, vue-resource}" />
-    <includedPredefinedLibrary name="HTTP Response Handler" />
-    <includedPredefinedLibrary name="Node.js Core" />
+    <excludedPredefinedLibrary name="HTML" />
   </component>
 </project>
