@@ -1,7 +1,7 @@
 import { RouteProp, NavigationState } from '@react-navigation/core'
 import { ParamListBase } from '@react-navigation/native'
 
-export interface _RouteProps extends RouteProp<ParamListBase, string>{
+export interface RouteProps extends RouteProp<ParamListBase, string>{
   state:NavigationState
 }
 
