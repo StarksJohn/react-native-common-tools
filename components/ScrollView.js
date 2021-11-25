@@ -11,12 +11,13 @@ import PureComponent from './PureComponent'
 export default class _ScrollView extends PureComponent {
   // 定义props类型
   static propTypes = {
-    style: ViewPropTypes.style, onScroll: PropTypes.func,
+    style: ViewPropTypes.style,
+    onScroll: PropTypes.func,
     alwaysBounceVertical: PropTypes.bool,
     horizontal: PropTypes.bool,
     pagingEnabled: PropTypes.bool,
     contentContainerStyle: ViewPropTypes.style,
-    onPageChanged: PropTypes.func,//pagingEnabled=true时，翻页后回调
+    onPageChanged: PropTypes.func// pagingEnabled=true时，翻页后回调
   }
 
   static defaultProps = {
@@ -24,9 +25,10 @@ export default class _ScrollView extends PureComponent {
     alwaysBounceVertical: false,
     horizontal: false,
     pagingEnabled: false,
-    contentContainerStyle: { alignItems: 'center', },
+    contentContainerStyle: { alignItems: 'center' },
     onScroll: () => {
-    }, onPageChanged: () => {
+    },
+    onPageChanged: () => {
     }
   }
 
@@ -35,7 +37,7 @@ export default class _ScrollView extends PureComponent {
     super(props)
     // 定义state
     this.state = {}
-    this.page = 0/*pagingEnabled=true时 标记 当前在第几页*/
+    this.page = 0/* pagingEnabled=true时 标记 当前在第几页 */
   }
 
   // 组件已装载
@@ -47,7 +49,7 @@ export default class _ScrollView extends PureComponent {
     return super.shouldComponentUpdate(nextProps, nextState)
   }
 
-  //https://www.cnblogs.com/mengff/p/12574405.html
+  // https://www.cnblogs.com/mengff/p/12574405.html
   componentDidUpdate (prevProps, prevState, spanshot) {
     return super.componentDidUpdate(prevProps, prevState, spanshot)
   }
@@ -63,22 +65,22 @@ export default class _ScrollView extends PureComponent {
     const {} = this.state
     return (
       <View style={[styles.container, style]}>
-        <ScrollView style={{ flex: 1, }} {...others} contentContainerStyle={[styles.contentContainerStyle, contentContainerStyle]}
+        <ScrollView style={{ flex: 1 }} {...others} contentContainerStyle={[styles.contentContainerStyle, contentContainerStyle]}
                     alwaysBounceVertical={alwaysBounceVertical} showsHorizontalScrollIndicator={alwaysBounceVertical} horizontal={horizontal}
                     pagingEnabled={pagingEnabled}
                     onMomentumScrollEnd={(event) => {
                       if (pagingEnabled) {
-                        const pageWidth = event.nativeEvent.layoutMeasurement.width//分页时 每页的w
-                        const contentOffset_x = event.nativeEvent.contentOffset.x//第0页相对scrollview最左边的x偏移量
+                        const pageWidth = event.nativeEvent.layoutMeasurement.width// 分页时 每页的w
+                        const contentOffset_x = event.nativeEvent.contentOffset.x// 第0页相对scrollview最左边的x偏移量
                         const page = contentOffset_x / pageWidth
                         console.log('ScrollView onMomentumScrollEnd event.nativeEvent=', event.nativeEvent, ' \n  page=', page)
                         this.page = page
                         onPageChanged({ page })
                       }
                     }} onScroll={(nativeEvent) => {
-          // console.log('ScrollView onScroll nativeEvent=', nativeEvent.nativeEvent)
-          onScroll(nativeEvent)
-        }}
+                      // console.log('ScrollView onScroll nativeEvent=', nativeEvent.nativeEvent)
+                      onScroll(nativeEvent)
+                    }}
         >
           {children}
         </ScrollView>
@@ -90,5 +92,5 @@ export default class _ScrollView extends PureComponent {
 // 创建样式表
 const styles = StyleSheet.create({
   container: {},
-  contentContainerStyle: { alignItems: 'center', }
+  contentContainerStyle: { alignItems: 'center' }
 })
