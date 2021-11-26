@@ -5,10 +5,11 @@ import useAndroidBackHandler from './components/useHooks/useAndroidBackHandler'
 import asyncStorage from './tools/asyncStorage'
 import routes, { RouteProps } from './routes/index'
 import MyStyleSheet from './styles/MyStyleSheet'
-import { List } from './components/List/index'
+import { List, mockData } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
 import * as request from './api/request'
+import useIsDarkMode from './useHooks/useIsDarkMode'
 
 export {
-  EventListener, sendEvent, appStyle, constant, useAndroidBackHandler, asyncStorage, routes, MyStyleSheet, List, ScrollView, request, RouteProps
+  EventListener, sendEvent, appStyle, constant, useAndroidBackHandler, asyncStorage, routes, MyStyleSheet, List, ScrollView, request, RouteProps, useIsDarkMode, mockData
 }

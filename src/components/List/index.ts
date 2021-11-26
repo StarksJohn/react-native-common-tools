@@ -1,8 +1,8 @@
 import List from './List'
 // eslint-disable-next-line camelcase
-import { one_section_array } from './mockData'
+import * as mockData from './mockData'
 
 export {
   // eslint-disable-next-line camelcase
-  List, one_section_array
+  List, mockData
 }
