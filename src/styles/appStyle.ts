@@ -5,6 +5,7 @@ import { ifIphoneX } from '../tools/screenTools'
 import { isIphoneX, getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper'
 import MyStyleSheet from './MyStyleSheet'
 import { SafeAreaViewProps } from 'react-native-safe-area-context'
+import { Math as M } from 'starkfrontendtools'
 
 const myStyleSheet = MyStyleSheet.create({
   pagePaddingHorizontal: 30
@@ -43,13 +44,18 @@ const _style = {
   },
   disabledColor: '#D7D8D6',
   randomColor: () => {
-    return '#' +
-      (function (color) {
-        return (color += '0123456789abcdef'[Math.floor(Math.random() * 16)]) &&
-        (color.length == 6)
-          ? color
-          : arguments.callee(color)// 如果 本文件 'use strict';  此处的 callee 就报错
-      })('')
+    // 如果 本文件 'use strict';  此处的 callee 就报错
+    // return '#' +
+    //   (function (color) {
+    //     return (color += '0123456789abcdef'[Math.floor(Math.random() * 16)]) &&
+    //     (color.length == 6)
+    //       ? color
+    //       : arguments.callee(color)//
+    //   })('')
+    const r = M.randomNums(0, 255)
+    const g = M.randomNums(0, 255)
+    const b = M.randomNums(0, 255)
+    return `rgba(${r},${g},${b},${1})`
   },
   appThemeColor,
   translucentColor: (r: number, g: number, b: number, a: number) => {
