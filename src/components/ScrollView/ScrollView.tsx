@@ -52,7 +52,9 @@ const ScrollView = ({ style, contentStyle, textInputRefs, children }, parentRef)
     // 将TextInput的引用传入，让SpringScrollView自动管理键盘遮挡问题
     textInputRefs={textInputRefs}
     initialContentOffset={{ x: 0, y: 0 }}>
-    {children}
+    <>
+      {children}
+    </>
   </SpringScrollView>
   )
 }
