@@ -7,9 +7,9 @@ import routes, { RouteProps } from './routes/index'
 import MyStyleSheet from './styles/MyStyleSheet'
 import { List, mockData } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
-import * as request from './api/request'
+// import * as request from './api/request'
 import useIsDarkMode from './useHooks/useIsDarkMode'
 
 export {
-  EventListener, sendEvent, appStyle, constant, useAndroidBackHandler, asyncStorage, routes, MyStyleSheet, List, ScrollView, request, RouteProps, useIsDarkMode, mockData
+  EventListener, sendEvent, appStyle, constant, useAndroidBackHandler, asyncStorage, routes, MyStyleSheet, List, ScrollView, RouteProps, useIsDarkMode, mockData
 }
