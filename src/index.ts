@@ -7,7 +7,6 @@ import routes, { RouteProps } from './routes/index'
 import MyStyleSheet from './styles/MyStyleSheet'
 import { List, mockData } from './components/List/index'
 import ScrollView from './components/ScrollView/ScrollView'
-// import * as request from './api/request'
 import useIsDarkMode from './useHooks/useIsDarkMode'
 
 export {

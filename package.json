@@ -1,6 +1,6 @@
 {
   "name": "react-native-common-tools",
-  "version": "1.0.53",
+  "version": "1.0.54",
   "description": "Contains some modules commonly used in react native",
   "license": "MIT",
   "main": "dist/index.js",
